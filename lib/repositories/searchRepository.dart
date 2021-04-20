@@ -11,21 +11,21 @@ class SearchRepository {
     await _firestore
         .collection('users')
         .doc(currentUserId)
-        .collection('Likes')
+        .collection('Swiped')
         .doc(selectedUserId)
         .set({});
 
     await _firestore
         .collection('users')
         .doc(selectedUserId)
-        .collection('Likes')
+        .collection('Swiped')
         .doc(currentUserId)
         .set({});
 
     await _firestore
         .collection('users')
         .doc(selectedUserId)
-        .collection('LikedYou')
+        .collection('SwipedRight')
         .doc(currentUserId)
         .set({
       'name': name,
@@ -38,14 +38,14 @@ class SearchRepository {
     await _firestore
         .collection('users')
         .doc(selectedUserId)
-        .collection('Likes')
+        .collection('Swiped')
         .doc(currentUserId)
         .set({});
 
     await _firestore
         .collection('users')
         .doc(currentUserId)
-        .collection('Likes')
+        .collection('Swiped')
         .doc(selectedUserId)
         .set({});
 
@@ -69,7 +69,7 @@ class SearchRepository {
     await _firestore
     .collection('users')
     .doc(userId)
-    .collection('Likes')
+    .collection('Swiped')
     .get().then(
         (docs){
           for(var doc in docs.docs){
