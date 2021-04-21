@@ -77,7 +77,8 @@ class _SearchState extends State<Search> {
                   color: Colors.black),
             );
           } else
-            return profileWidget(
+            return SingleChildScrollView(
+                child: profileWidget(
                 padding: size.height * .035,
                 photoHeight: size.height * .824,
                 photoWidth: size.width * .95,
@@ -87,7 +88,7 @@ class _SearchState extends State<Search> {
                 containerWidth: size.width * .9,
                 child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: size.height * .02),
+                        EdgeInsets.symmetric(horizontal: size.width * .02),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -128,7 +129,7 @@ class _SearchState extends State<Search> {
                           ),
                           SizedBox(
                             height: size.height * .05,
-                          ),
+                          child:
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
@@ -151,7 +152,7 @@ class _SearchState extends State<Search> {
                                   size.height * .04, Colors.white),
                             ],
                           )
-                        ])));
+                        )]))));
         } else
           return Container();
       },
