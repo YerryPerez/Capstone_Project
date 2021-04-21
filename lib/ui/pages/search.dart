@@ -121,7 +121,7 @@ class _SearchState extends State<Search> {
                                       ? ((difference / 1000) * .62137119224)
                                               .floor()
                                               .toString() +
-                                          "km away"
+                                          "miles away"
                                       : "away",
                                   style: TextStyle(color: Colors.white)),
                             ],

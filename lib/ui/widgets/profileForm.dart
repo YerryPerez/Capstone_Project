@@ -141,9 +141,9 @@ class _ProfileFormState extends State<ProfileForm> {
                                       setState(() {
                                         photo = File(result.files.first.path);
                                       });
-                                      print("swaj-lord millionaire");
+
                                     }
-                                    print("swaj-lord millionaire outside");
+
                                   },
                                   child: Image.asset('assets/personpeople.png'),
                                 )
