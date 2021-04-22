@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test2/models/user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +24,7 @@ class MatchesRepository {
     return _firestore
         .collection('users')
         .doc(userId)
-        .collection('selectedList')
+        .collection('LikedYou')
         .snapshots();
   }
 
@@ -78,7 +78,7 @@ class MatchesRepository {
   void deleteUser(currentUserId, selectedUserId) async
   {
     return await _firestore.collection('users').doc(currentUserId).collection(
-        'selectedList')
+        'LikedYou')
         .doc(selectedUserId).delete();
   }
 

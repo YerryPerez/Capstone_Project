@@ -87,7 +87,7 @@ class _MatchesState extends State<Matches> {
                           return GestureDetector(
                             onTap: () async {
                               User selectedUser = await _matchesRepository
-                                  .getUserDetails(user[index].get('uid'));
+                                  .getUserDetails(user[index].id);
                               User currentUser = await _matchesRepository
                                   .getUserDetails(widget.userId);
                               await getDifference(selectedUser.location);
@@ -241,7 +241,7 @@ class _MatchesState extends State<Matches> {
                           return GestureDetector(
                             onTap: () async {
                               User selectedUser = await _matchesRepository
-                                  .getUserDetails(user[index].get('uid'));
+                                  .getUserDetails(user[index].id);
                               User currentUser = await _matchesRepository
                                   .getUserDetails(widget.userId);
 
