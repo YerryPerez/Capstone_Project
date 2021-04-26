@@ -13,20 +13,18 @@ import 'package:geolocator/geolocator.dart';
 
 import 'messaging.dart';
 
+
 class Matches extends StatefulWidget {
   final String userId;
 
   const Matches({this.userId});
 
-
   @override
   _MatchesState createState() => _MatchesState();
 }
 
-
 class _MatchesState extends State<Matches> {
-
-  MatchesRepository _matchesRepository = MatchesRepository();
+  MatchesRepository matchesRepository = MatchesRepository();
   MatchesBloc _matchesBloc;
 
   int difference;
@@ -39,17 +37,15 @@ class _MatchesState extends State<Matches> {
     difference = location.toInt();
   }
 
+
   @override
-  void initState()
-  {
-    _matchesBloc = MatchesBloc(matchesRepository: _matchesRepository);
+  void initState() {
+    _matchesBloc = MatchesBloc(matchesRepository: matchesRepository);
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     return BlocBuilder<MatchesBloc, MatchesState>(
@@ -66,7 +62,7 @@ class _MatchesState extends State<Matches> {
                 pinned: true,
                 backgroundColor: Colors.white,
                 title: Text(
-                  "Matched Users",
+                  "Matched User",
                   style: TextStyle(color: Colors.black, fontSize: 30.0),
                 ),
               ),
@@ -78,7 +74,7 @@ class _MatchesState extends State<Matches> {
                       child: Container(),
                     );
                   }
-                  if (snapshot.data.docs!= null) {
+                  if (snapshot.data.docs != null) {
                     final user = snapshot.data.docs;
 
                     return SliverGrid(
@@ -86,9 +82,9 @@ class _MatchesState extends State<Matches> {
                             (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () async {
-                              User selectedUser = await _matchesRepository
+                              User selectedUser = await matchesRepository
                                   .getUserDetails(user[index].id);
-                              User currentUser = await _matchesRepository
+                              User currentUser = await matchesRepository
                                   .getUserDetails(widget.userId);
                               await getDifference(selectedUser.location);
                               showDialog(
@@ -140,10 +136,10 @@ class _MatchesState extends State<Matches> {
                                               ),
                                               Text(
                                                 difference != null
-                                                    ? ((difference / 1000) * .62137119224)
+                                                    ? (difference / 1000)
                                                     .floor()
                                                     .toString() +
-                                                    " miles away"
+                                                    " km away"
                                                     : "away",
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -221,7 +217,7 @@ class _MatchesState extends State<Matches> {
                 backgroundColor: Colors.white,
                 pinned: true,
                 title: Text(
-                  "People Who've Liked You",
+                  "Someone Likes You",
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
               ),
@@ -240,13 +236,13 @@ class _MatchesState extends State<Matches> {
                             (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () async {
-                              User selectedUser = await _matchesRepository
+                              User selectedUser = await matchesRepository
                                   .getUserDetails(user[index].id);
-                              User currentUser = await _matchesRepository
+                              User currentUser = await matchesRepository
                                   .getUserDetails(widget.userId);
 
                               await getDifference(selectedUser.location);
-
+                              // ignore: missing_return
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => Dialog(
@@ -305,10 +301,10 @@ class _MatchesState extends State<Matches> {
                                                     ),
                                                     Text(
                                                       difference != null
-                                                          ? ((difference / 1000) * .62137119224)
+                                                          ? (difference / 1000)
                                                           .floor()
                                                           .toString() +
-                                                          " miles away"
+                                                          " km away"
                                                           : "away",
                                                       style: TextStyle(
                                                         color: Colors.white,
@@ -345,17 +341,22 @@ class _MatchesState extends State<Matches> {
                                                       _matchesBloc.add(
                                                         AcceptUserEvent(
                                                             selectedUser:
-                                                            selectedUser.uid,
+                                                            selectedUser
+                                                                .uid,
                                                             currentUser:
                                                             currentUser.uid,
                                                             currentUserPhotoUrl:
-                                                            currentUser.photo,
+                                                            currentUser
+                                                                .photo,
                                                             currentUserName:
-                                                            currentUser.name,
+                                                            currentUser
+                                                                .name,
                                                             selectedUserPhotoUrl:
-                                                            selectedUser.photo,
+                                                            selectedUser
+                                                                .photo,
                                                             selectedUserName:
-                                                            selectedUser.name),
+                                                            selectedUser
+                                                                .name),
                                                       );
                                                       Navigator.of(context)
                                                           .pop();
@@ -406,5 +407,4 @@ class _MatchesState extends State<Matches> {
       },
     );
   }
-
-  }
+}
