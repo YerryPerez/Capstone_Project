@@ -73,4 +73,20 @@ class UserRepository{
             });
           });
   }
+  //Delete user account
+  Future<void> deleteProfile(
+      File photo,
+      String userId,
+      String name,
+      String gender,
+      String interestedIn,
+      DateTime age,
+      GeoPoint location
+      ) async{
+
+    return  await _firestore.collection('users').doc(userId).delete();
+
+
+  }
+
 }
