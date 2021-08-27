@@ -34,11 +34,18 @@ class Tabs extends StatelessWidget {
               ),
               actions: <Widget>[
                 IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                  },
+                ),
+                IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
                     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                   },
-                )
+                ),
+
               ],
               bottom: PreferredSize(
                   preferredSize: Size.fromHeight(48.0),
