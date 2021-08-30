@@ -1,0 +1,38 @@
+﻿Steps to Ensure Code Maintainability:
+
+
+Claim an issue on our issue tracker by accepting the issue on the board saying you are working on it. If the issue doesn't exist yet, open it. 
+
+
+Create new branches for each issue we are working on in order to avoid issues on the main branch. 
+
+Create PR’s/Merge requests and ensure that at least one other team member has reviewed code changes before they are merged into the main branch. 
+
+
+Perform local testing before doing a PR/Merge request. Only PRs with passing tests will be accepted.
+
+
+Make sure that no build files are pushed to the github. Make sure that your local repository has a .gitignore file.
+
+
+Use descriptive function names that describe the use of the function. The same goes for variable names; in which the name should describe what the variable is supposed to represent. This should result in readable code. 
+
+
+Add useful git commit messages that describe what has been committed.
+
+
+Add useful comments to complex  business logic that isn’t straight forward or intuitive.
+
+
+
+
+Documentation 
+If you add a new feature/modify an existing one, make sure to document it in the Design document. Make sure to thoroughly describe what the feature does and how it connects to the rest of the code. 
+
+
+
+
+Code of conduct:
+* Keep the environment positive
+* Make positive/constructive comments on code reviews/PRs
+* Do not harass any team member/contributor based on their gender, age, sex, physical appearance, race, religion or any such characteristic. Harassment includes hurtful actions or words intended towards a person. None of this will be tolerated. Violation of this guideline will lead to immediate removal from the capstone team.
