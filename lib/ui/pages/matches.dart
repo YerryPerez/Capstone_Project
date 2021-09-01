@@ -25,8 +25,8 @@ class Matches extends StatefulWidget {
 
 class _MatchesState extends State<Matches> {
   MatchesRepository matchesRepository = MatchesRepository();
-  MatchesBloc _matchesBloc;
 
+  MatchesBloc _matchesBloc;
   int difference;
 
   getDifference(GeoPoint userLocation) async {

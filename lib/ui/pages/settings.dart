@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/ui/constants.dart';
 
 class Settings extends StatelessWidget {
+  UserRepository _userRepository = UserRepository();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
