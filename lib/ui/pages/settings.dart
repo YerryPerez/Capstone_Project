@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/ui/constants.dart';
 
 class Settings extends StatelessWidget {
@@ -54,8 +57,12 @@ class Settings extends StatelessWidget {
                    leading: Icon(Icons.delete, color: backgroundColor,),
                    title: Text("Delete Profile"),
                    trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
-                   onTap:(){
+                   onTap:() async {
                      //open privacy policy
+                     User user = FirebaseAuth.instance.currentUser;
+                     user.delete();
+                     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+
                    }
 
                ),
