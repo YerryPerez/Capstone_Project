@@ -3,15 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_test2/bloc/profile/profile_bloc.dart';
+import 'package:flutter_test2/repositories/userRepository.dart';
+import 'package:flutter_test2/ui/pages/login.dart';
 
 import '../constants.dart';
 
 class Settings extends StatefulWidget {
+  final String userId;
+
+  const Settings({this.userId});
+
   @override
   _SettingsState createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
+
+  final UserRepository _userRepository = UserRepository();
+  ProfileBloc _profileBloc;
+  User _currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,8 +79,11 @@ class _SettingsState extends State<Settings> {
                         //open privacy policy
                         User user = FirebaseAuth.instance.currentUser;
                         user.delete();
-                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-
+                       /* BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()));
+*/
                       }
 
                   ),
