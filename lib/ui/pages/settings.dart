@@ -1,12 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test2/repositories/userRepository.dart';
-import 'package:flutter_test2/ui/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 
-class Settings extends StatelessWidget {
-  UserRepository _userRepository = UserRepository();
+import '../constants.dart';
 
+class Settings extends StatefulWidget {
+  @override
+  _SettingsState createState() => _SettingsState();
+}
 
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,35 +42,39 @@ class Settings extends StatelessWidget {
             Card(
               elevation: 4.0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-           child: Column(
-             children: <Widget>[
+              child: Column(
+                children: <Widget>[
 
-               ListTile(
-                 leading: Icon(Icons.policy_outlined, color: backgroundColor,),
-                 title: Text("Privacy Policy"),
-                 trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
-                   onTap:(){
-                   //open privacy policy
-                   }
+                  ListTile(
+                      leading: Icon(Icons.policy_outlined, color: backgroundColor,),
+                      title: Text("Privacy Policy"),
+                      trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
+                      onTap:(){
+                        //open privacy policy
+                      }
 
-               ),
-                Divider(
-                  color: Colors.black,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-               ListTile(
-                   leading: Icon(Icons.delete, color: backgroundColor,),
-                   title: Text("Delete Profile"),
-                   trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
-                   onTap:(){
-                     //open privacy policy
-                   }
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  ListTile(
+                      leading: Icon(Icons.delete, color: backgroundColor,),
+                      title: Text("Delete Profile"),
+                      trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
+                      onTap:() async {
+                        //open privacy policy
+                        User user = FirebaseAuth.instance.currentUser;
+                        user.delete();
+                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
 
-               ),
-             ],
+                      }
 
-            ),
+                  ),
+                ],
+
+              ),
             ),
             const SizedBox(height: 10.0),
             Text("Notification Settings", style: TextStyle(
@@ -75,11 +84,11 @@ class Settings extends StatelessWidget {
             ),
             ),
             SwitchListTile(value: true,
-            activeColor: Colors.indigo,
-            contentPadding: const EdgeInsets.all(0),
-            title: Text("Receive Notifications"),
+              activeColor: Colors.indigo,
+              contentPadding: const EdgeInsets.all(0),
+              title: Text("Receive Notifications"),
               onChanged: (val){
-              // flip
+                // flip
               },
             ),
           ],
