@@ -72,11 +72,36 @@ class _SettingsState extends State<Settings> {
                       title: Text("Delete Profile"),
                       trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
                       onTap:() async {
-                        //open privacy policy
-                        User user = FirebaseAuth.instance.currentUser;
-                        user.delete();
-                        _userRepository.deleteProfile(user.uid);
-                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Delete Profile.'),
+                              content: Text("Are You Sure Want To Proceed ?"),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text("YES"),
+                                  onPressed: () {
+                                    User user = FirebaseAuth.instance.currentUser;
+                                    user.delete();
+                                    _userRepository.deleteProfile(user.uid);
+                                    BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+
+                                FlatButton(
+                                  child: Text("NO"),
+                                  onPressed: () {
+                                    //Put your code here which you want to execute on No button click.
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
                   ),
                 ],
