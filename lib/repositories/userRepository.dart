@@ -77,10 +77,9 @@ class UserRepository{
   Future<void> deleteProfile(
       String userId
       ) async{
-
     return  await _firestore.collection('users').doc(userId).delete();
-
-
   }
+
+
 
 }

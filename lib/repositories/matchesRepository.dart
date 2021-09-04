@@ -75,11 +75,36 @@ class MatchesRepository {
         .delete();
   }
 
-  void deleteUser(currentUserId, selectedUserId) async
+  Future<void> deleteUser(currentUserId, selectedUserId) async
   {
     return await _firestore.collection('users').doc(currentUserId).collection(
         'LikedYou')
         .doc(selectedUserId).delete();
+  }
+
+  Future<void> deleteUserMatchedList(currentUserId,selectedUserId) async
+  {
+    return await _firestore.collection('users').doc(currentUserId).collection(
+        'matchedList')
+        .doc(selectedUserId).delete();
+  }
+
+  Future<void> deleteUserLikesList(currentUserId,selectedUserId) async
+  {
+    return await _firestore.collection('users').doc(currentUserId).collection(
+        'Likes')
+        .doc(selectedUserId).delete();
+  }
+
+  Future<void> deleteUserFromAllMatches(currentUserId) async
+  {
+    List<String> chosenList = await getChosenList(currentUserId);
+    for(var user in chosenList)
+      {
+        deleteUserMatchedList(currentUserId, user);
+        deleteUser(currentUserId, user);
+        deleteUserLikesList(currentUserId, user);
+      }
   }
 
   Future selectUser(currentUserId, selectedUserId, currentUserName,
@@ -105,6 +130,24 @@ class MatchesRepository {
       'name': currentUserName,
       'photoUrl': currentUserPhotoUrl,
     });
+  }
+
+  Future<List> getChosenList(userId) async{
+    List<String> chosenList = [];
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('Likes')
+        .get().then(
+            (docs){
+          for(var doc in docs.docs){
+            if (docs.docs != null){
+              chosenList.add(doc.id);
+            }
+          }
+        }
+    );
+    return chosenList;
   }
 
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
+import 'package:flutter_test2/repositories/matchesRepository.dart';
 
 import '../constants.dart';
 
@@ -19,6 +20,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
 
   final UserRepository _userRepository = UserRepository();
+  final MatchesRepository _matchesRepository = MatchesRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -79,19 +81,20 @@ class _SettingsState extends State<Settings> {
                               title: Text('Delete Profile.'),
                               content: Text("Are You Sure Want To Proceed ?"),
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   child: Text("YES"),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     User user = FirebaseAuth.instance.currentUser;
+                                    await _matchesRepository.deleteUserFromAllMatches(user.uid);
+                                    await _userRepository.deleteProfile(user.uid);
                                     user.delete();
-                                    _userRepository.deleteProfile(user.uid);
                                     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
                                 ),
 
-                                FlatButton(
+                                TextButton(
                                   child: Text("NO"),
                                   onPressed: () {
                                     //Put your code here which you want to execute on No button click.
