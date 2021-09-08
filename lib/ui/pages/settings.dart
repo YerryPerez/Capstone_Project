@@ -85,7 +85,7 @@ class _SettingsState extends State<Settings> {
                                   child: Text("YES"),
                                   onPressed: () async {
                                     User user = FirebaseAuth.instance.currentUser;
-                                    await _matchesRepository.deleteUserFromAllMatches(user.uid);
+                                    await _matchesRepository.deleteUserFromAllLists(user.uid);
                                     await _userRepository.deleteProfile(user.uid);
                                     user.delete();
                                     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());

@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test2/models/user.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MatchesRepository {
   final FirebaseFirestore _firestore;
@@ -75,7 +74,7 @@ class MatchesRepository {
         .delete();
   }
 
-  Future<void> deleteUser(currentUserId, selectedUserId) async
+  Future<void> deleteUserFromLikedYou(currentUserId, selectedUserId) async
   {
     return await _firestore.collection('users').doc(currentUserId).collection(
         'LikedYou')
@@ -89,27 +88,27 @@ class MatchesRepository {
         .doc(selectedUserId).delete();
   }
 
-  Future<void> deleteUserLikesList(currentUserId,selectedUserId) async
+  Future<void> deleteUserFromOthersLikes(currentUserId,selectedUserId) async
   {
     return await _firestore.collection('users').doc(currentUserId).collection(
         'Likes')
         .doc(selectedUserId).delete();
   }
 
-  Future<void> deleteUserFromAllMatches(currentUserId) async
+  Future<void> deleteUserFromAllLists(currentUserId) async
   {
     List<String> chosenList = await getChosenList(currentUserId);
     for(var user in chosenList)
       {
         deleteUserMatchedList(currentUserId, user);
-        deleteUser(currentUserId, user);
-        deleteUserLikesList(currentUserId, user);
+        deleteUserFromLikedYou(currentUserId, user);
+        deleteUserFromOthersLikes(currentUserId, user);
       }
   }
 
   Future selectUser(currentUserId, selectedUserId, currentUserName,
       currentUserPhotoUrl, selectedUserName, selectedUserPhotoUrl) async {
-    deleteUser(currentUserId, selectedUserId);
+    deleteUserFromLikedYou(currentUserId, selectedUserId);
 
     await _firestore
         .collection('users')
