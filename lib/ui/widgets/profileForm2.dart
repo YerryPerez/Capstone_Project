@@ -57,6 +57,16 @@ class _ProfileFormState extends State<ProfileForm> {
     location = GeoPoint(position.latitude, position.longitude);
   }
 
+
+  _getCurrentDetails() async {
+    var details = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).get();
+    _nameController.text = details['name'];
+    age = details['age'];
+    gender = details['gender'];
+    interestedIn = details['interestedIn'];
+    photo = details['photoUrl'];
+  }
+
   _onSubmitted() async {
     await _getLocation();
     _profileBloc.add(
@@ -73,6 +83,7 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   void initState() {
     _getLocation();
+    _getCurrentDetails();
     _profileBloc = BlocProvider.of<ProfileBloc>(context);
     super.initState();
   }
