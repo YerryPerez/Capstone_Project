@@ -102,8 +102,9 @@ class MatchesRepository {
       {
         deleteUserMatchedList(currentUserId, user);
         deleteUserMatchedList(user, currentUserId);
+
         deleteUserFromLikedYou(currentUserId, user);
-        deleteUserFromLikedYou(user, currentUserId);
+
         deleteUserFromOthersLikes(currentUserId, user);
         deleteUserFromOthersLikes(user, currentUserId);
       }
