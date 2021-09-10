@@ -16,10 +16,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
-class ProfileForm extends StatefulWidget {
+class ProfileForm2 extends StatefulWidget {
   final UserRepository _userRepository;
 
-  ProfileForm({@required UserRepository userRepository})
+  ProfileForm2({@required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository;
 
@@ -27,7 +27,7 @@ class ProfileForm extends StatefulWidget {
   _ProfileFormState createState() => _ProfileFormState();
 }
 
-class _ProfileFormState extends State<ProfileForm> {
+class _ProfileFormState extends State<ProfileForm2> {
   final TextEditingController _nameController = TextEditingController();
 
   String gender, interestedIn;
