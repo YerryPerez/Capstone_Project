@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_test2/bloc/profile/profile_bloc.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/repositories/matchesRepository.dart';
 
@@ -60,7 +61,8 @@ class _SettingsState extends State<Settings> {
                       title: Text("Privacy Policy"),
                       trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
                       onTap:(){
-                        //open privacy policy
+
+
                       }
 
                   ),
