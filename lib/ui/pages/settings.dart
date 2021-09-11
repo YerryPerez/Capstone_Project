@@ -8,6 +8,7 @@ import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/repositories/matchesRepository.dart';
 
 import '../constants.dart';
+import 'editProfile.dart';
 
 class Settings extends StatefulWidget {
   final String userId;
@@ -43,7 +44,10 @@ class _SettingsState extends State<Settings> {
               margin: const EdgeInsets.all(8.0),
               child: ListTile(
                 onTap: (){
-                  //open edit profile
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfile(userRepository: _userRepository)),
+                  );
                 },
                 title: Text("Edit Profile") ,
                 trailing: Icon(Icons.edit,color: backgroundColor,) ,
