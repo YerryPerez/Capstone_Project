@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/bloc/profile/profile_bloc.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/repositories/matchesRepository.dart';
 
@@ -43,10 +44,12 @@ class _SettingsState extends State<Settings> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               margin: const EdgeInsets.all(8.0),
               child: ListTile(
-                onTap: (){
+                onTap: () async {
+                  User user = FirebaseAuth.instance.currentUser;
+                  CitaUser userAccountInfo =  await _matchesRepository.getUserDetails(user.uid);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile(userRepository: _userRepository)),
+                    MaterialPageRoute(builder: (context) => EditProfile(userRepository: _userRepository, userAccountInfo: userAccountInfo)),
                   );
                 },
                 title: Text("Edit Profile") ,

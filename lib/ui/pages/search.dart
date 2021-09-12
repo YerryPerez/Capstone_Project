@@ -3,7 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/search/search_bloc.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/searchRepository.dart';
 import 'package:flutter_test2/ui/widgets/iconWidget.dart';
 import 'package:flutter_test2/ui/widgets/profile.dart';
@@ -23,7 +23,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   final SearchRepository _searchRepository = SearchRepository();
   SearchBloc _searchBloc;
-  User _user, _currentUser;
+  CitaUser _user, _currentUser;
   int difference;
 
   getDifference(GeoPoint userLocation) async {

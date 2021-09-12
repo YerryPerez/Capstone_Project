@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_test2/models/message.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -30,8 +30,8 @@ class MessageRepository{
 
   }
 
-  Future<User> getUserDetail({userId}) async{
-    User _user= User();
+  Future<CitaUser> getUserDetail({userId}) async{
+    CitaUser _user= CitaUser();
 
     await  _firestore.collection('users')
         .doc(userId).get().then((user){

@@ -3,11 +3,21 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/bloc/profile/bloc.dart';
+import 'package:flutter_test2/models/citaUser.dart';
+
+import 'package:flutter_test2/repositories/matchesRepository.dart';
+import 'package:flutter_test2/repositories/userAccountRepository.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/widgets/gender.dart';
@@ -17,9 +27,11 @@ import 'package:intl/intl.dart';
 
 class editProfileForm extends StatefulWidget {
   final UserRepository _userRepository;
+   CitaUser _userAccountInfo;
 
-  editProfileForm({@required UserRepository userRepository})
-      : assert(userRepository != null),
+  editProfileForm({@required UserRepository userRepository, @required CitaUser userAccountInfo})
+      : assert(userRepository != null && userAccountInfo != null),
+        _userAccountInfo = userAccountInfo,
         _userRepository = userRepository;
 
   @override
@@ -28,8 +40,12 @@ class editProfileForm extends StatefulWidget {
 
 class _EditProfileForm extends State<editProfileForm> {
   final TextEditingController _nameController = TextEditingController();
+  final UserAccountRepository userInfoRepo = UserAccountRepository();
 
-  String gender, interestedIn;
+
+
+  String gender;
+  String interestedIn;
   DateTime age;
   File photo;
   GeoPoint location;
@@ -37,6 +53,8 @@ class _EditProfileForm extends State<editProfileForm> {
   ProfileBloc _profileBloc;
 
   UserRepository get _userRepository => widget._userRepository;
+  CitaUser get _userAccountInfo => widget._userAccountInfo;
+
 
   bool get isFilled =>
       _nameController.text.isNotEmpty &&
@@ -55,6 +73,15 @@ class _EditProfileForm extends State<editProfileForm> {
 
     location = GeoPoint(position.latitude, position.longitude);
   }
+    _getCurrentDetails() async {
+      _nameController.text = FirebaseAuth.instance.currentUser.uid;
+
+     _nameController.text = _userAccountInfo.name;
+     age = _userAccountInfo.age.toDate();
+     gender = _userAccountInfo.gender;
+     interestedIn = _userAccountInfo.interestedIn;
+  //  photo = File(_userAccountInfo.photo);
+  }
 
   _onSubmitted() async {
     await _getLocation();
@@ -72,6 +99,7 @@ class _EditProfileForm extends State<editProfileForm> {
   @override
   void initState() {
     _getLocation();
+    _getCurrentDetails();
     _profileBloc = BlocProvider.of<ProfileBloc>(context);
     super.initState();
   }

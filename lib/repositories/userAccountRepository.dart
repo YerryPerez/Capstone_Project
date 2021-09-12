@@ -2,7 +2,7 @@ import 'dart:async';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 
 class UserAccountRepository {
   final FirebaseFirestore _firestore;
@@ -11,9 +11,9 @@ class UserAccountRepository {
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
 
-  Future<User> getUserDetails(userId) async
+  Future<CitaUser> getUserDetails(String userId) async
   {
-    User _user = User();
+    CitaUser _user = CitaUser();
 
     await _firestore.collection('users').doc(userId).get().then((user) {
       _user.uid = user['uid'];

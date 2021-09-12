@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/searchRepository.dart';
 import 'package:meta/meta.dart';
 
@@ -47,9 +47,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       String photoUrl}) async* {
     yield LoadingState();
 
-    User user = await _searchRepository.chooseUser(
+    CitaUser user = await _searchRepository.chooseUser(
         currentUserId, selectedUserId, name, photoUrl);
-    User currentUser = await _searchRepository.getUserInterests(currentUserId);
+    CitaUser currentUser = await _searchRepository.getUserInterests(currentUserId);
 
     yield LoadUserState(user, currentUser);
   }
@@ -58,16 +58,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       {String currentUserId, String selectedUserId}) async* {
     yield LoadingState();
 
-    User user = await _searchRepository.passUser(currentUserId, selectedUserId);
-    User currentUser = await _searchRepository.getUserInterests(currentUserId);
+    CitaUser user = await _searchRepository.passUser(currentUserId, selectedUserId);
+    CitaUser currentUser = await _searchRepository.getUserInterests(currentUserId);
 
     yield LoadUserState(user, currentUser);
   }
 
   Stream<SearchState> _mapLoadUserToState({String currentUserId}) async* {
     yield LoadingState();
-    User user = await _searchRepository.getUser(currentUserId);
-    User currentUser = await _searchRepository.getUserInterests(currentUserId);
+    CitaUser user = await _searchRepository.getUser(currentUserId);
+    CitaUser currentUser = await _searchRepository.getUserInterests(currentUserId);
 
     yield LoadUserState(user, currentUser);
   }

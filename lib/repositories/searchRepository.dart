@@ -1,4 +1,4 @@
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchRepository {
@@ -7,7 +7,7 @@ class SearchRepository {
   SearchRepository({FirebaseFirestore firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<User> chooseUser(currentUserId, selectedUserId, name, photoUrl) async {
+  Future<CitaUser> chooseUser(currentUserId, selectedUserId, name, photoUrl) async {
     await _firestore
         .collection('users')
         .doc(currentUserId)
@@ -53,7 +53,7 @@ class SearchRepository {
   }
 
   Future getUserInterests(userId) async {
-    User currentUser = User();
+    CitaUser currentUser = CitaUser();
 
     await _firestore.collection('users').doc(userId).get().then((user) {
       currentUser.name = user['name'];
@@ -82,10 +82,10 @@ class SearchRepository {
     return chosenList;
   }
 
-  Future<User> getUser(userId) async{
-   User _user = User();
+  Future<CitaUser> getUser(userId) async{
+   CitaUser _user = CitaUser();
    List<String> chosenList = await getChosenList(userId);
-   User currentUser = await getUserInterests(userId);
+   CitaUser currentUser = await getUserInterests(userId);
 
    await _firestore.collection('users')
    .get().then((users){
