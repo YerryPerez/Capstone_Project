@@ -21,6 +21,7 @@ import 'package:flutter_test2/repositories/userAccountRepository.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/widgets/gender.dart';
+import 'package:flutter_test2/ui/widgets/photo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -47,11 +48,11 @@ class _EditProfileForm extends State<editProfileForm> {
   String gender;
   String interestedIn;
   DateTime age;
-  File photo;
+  File uploadPhotoFromPhone;
   GeoPoint location;
 
   ProfileBloc _profileBloc;
-
+  String photo;
   UserRepository get _userRepository => widget._userRepository;
   CitaUser get _userAccountInfo => widget._userAccountInfo;
 
@@ -60,7 +61,7 @@ class _EditProfileForm extends State<editProfileForm> {
       _nameController.text.isNotEmpty &&
       gender != null &&
       interestedIn != null &&
-      photo != null &&
+      uploadPhotoFromPhone != null &&
       age != null;
 
   bool isButtonEnabled(ProfileState state) {
@@ -80,7 +81,7 @@ class _EditProfileForm extends State<editProfileForm> {
      age = _userAccountInfo.age.toDate();
      gender = _userAccountInfo.gender;
      interestedIn = _userAccountInfo.interestedIn;
-  //  photo = File(_userAccountInfo.photo);
+      photo = _userAccountInfo.photo;
   }
 
   _onSubmitted() async {
@@ -92,7 +93,7 @@ class _EditProfileForm extends State<editProfileForm> {
           location: location,
           gender: gender,
           interestedIn: interestedIn,
-          photo: photo),
+          photo: uploadPhotoFromPhone),
     );
   }
 
@@ -158,7 +159,7 @@ class _EditProfileForm extends State<editProfileForm> {
                         child: CircleAvatar(
                           radius: size.width * .3,
                           backgroundColor: Colors.transparent,
-                          child: photo == null
+                          child: uploadPhotoFromPhone == null
                               ? GestureDetector(
                                   onTap: () async {
                                     FilePickerResult result = await FilePicker
@@ -167,13 +168,24 @@ class _EditProfileForm extends State<editProfileForm> {
                                     log("not event in there");
                                     if (result != null) {
                                       setState(() {
-                                        photo = File(result.files.first.path);
+                                        uploadPhotoFromPhone = File(result.files.first.path);
                                       });
 
                                     }
 
                                   },
-                                  child: Image.asset('assets/personpeople.png'),
+                                  //default image
+                                  child:  ClipOval(
+                                    child: Container(
+                                      height: size.height* 0.3,
+                                      width: size.height * 0.3,
+                                      child: PhotoWidget(
+                                        photoLink: photo,
+                                      ),
+                                    ),
+                                  ),
+
+
                                 )
                               : GestureDetector(
                                   onTap: () async {
@@ -182,13 +194,13 @@ class _EditProfileForm extends State<editProfileForm> {
                                         .pickFiles(type: FileType.image);
                                     if (result != null) {
                                       setState(() {
-                                        photo = File(result.files.first.path);
+                                        uploadPhotoFromPhone = File(result.files.first.path);
                                       });
                                     }
                                   },
                                   child: CircleAvatar(
                                     radius: size.width * .3,
-                                    backgroundImage: FileImage(photo),
+                                    backgroundImage: FileImage(uploadPhotoFromPhone),
                                   )),
                         )),
                     textFieldWidget(_nameController, "Name", size),
