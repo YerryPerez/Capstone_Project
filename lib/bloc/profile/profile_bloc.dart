@@ -58,6 +58,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         interestedIn: event.interestedIn
       );
     }
+    else if(event is SubmittedWithoutImage){
+      final uid = await _userRepository.getUser();
+      yield* _mapSubmittedWithoutImageToState(
+        //  photo: event.photo,
+          name: event.name,
+          gender: event.gender,
+          userId: uid,
+          age: event.age,
+          location: event.location,
+          interestedIn: event.interestedIn,
+          url: event.url
+      );
+    }
   }
 
   Stream <ProfileState> _mapNameChangedToState(String name) async* {
@@ -102,5 +115,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       catch (_){
         yield ProfileState.failure();
       }
+  }
+
+  Stream<ProfileState> _mapSubmittedWithoutImageToState({String name, String gender, String userId,
+    DateTime age, GeoPoint location, String interestedIn, String url}) async* {
+    yield ProfileState.loading();
+    try{
+      await _userRepository.profileSetUpWithoutImage(userId, name,
+          gender, interestedIn, age, location, url);
+      yield ProfileState.success();
+    }
+    catch (_){
+      yield ProfileState.failure();
+    }
   }
 }

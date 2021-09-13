@@ -24,6 +24,7 @@ import 'package:flutter_test2/ui/widgets/gender.dart';
 import 'package:flutter_test2/ui/widgets/photo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 
 class editProfileForm extends StatefulWidget {
@@ -61,7 +62,6 @@ class _EditProfileForm extends State<editProfileForm> {
       _nameController.text.isNotEmpty &&
       gender != null &&
       interestedIn != null &&
-      uploadPhotoFromPhone != null &&
       age != null;
 
   bool isButtonEnabled(ProfileState state) {
@@ -75,14 +75,12 @@ class _EditProfileForm extends State<editProfileForm> {
     location = GeoPoint(position.latitude, position.longitude);
   }
     _getCurrentDetails() async {
-      _nameController.text = FirebaseAuth.instance.currentUser.uid;
-
      _nameController.text = _userAccountInfo.name;
      age = _userAccountInfo.age.toDate();
      gender = _userAccountInfo.gender;
      interestedIn = _userAccountInfo.interestedIn;
-      photo = _userAccountInfo.photo;
-  }
+     photo = _userAccountInfo.photo;
+    }
 
   _onSubmitted() async {
     await _getLocation();
@@ -97,6 +95,19 @@ class _EditProfileForm extends State<editProfileForm> {
     );
   }
 
+  _onSubmittedWithoutImage() async {
+    await _getLocation();
+    _profileBloc.add(
+      SubmittedWithoutImage(
+          name: _nameController.text,
+          age: age,
+          location: location,
+          gender: gender,
+          interestedIn: interestedIn,
+          url: photo
+          ),
+    );
+  }
   @override
   void initState() {
     _getLocation();
@@ -170,9 +181,7 @@ class _EditProfileForm extends State<editProfileForm> {
                                       setState(() {
                                         uploadPhotoFromPhone = File(result.files.first.path);
                                       });
-
                                     }
-
                                   },
                                   //default image
                                   child:  ClipOval(
@@ -184,14 +193,13 @@ class _EditProfileForm extends State<editProfileForm> {
                                       ),
                                     ),
                                   ),
-
-
                                 )
                               : GestureDetector(
                                   onTap: () async {
                                     FilePickerResult result = await FilePicker
                                         .platform
                                         .pickFiles(type: FileType.image);
+                                    log("in there");
                                     if (result != null) {
                                       setState(() {
                                         uploadPhotoFromPhone = File(result.files.first.path);
@@ -310,7 +318,13 @@ class _EditProfileForm extends State<editProfileForm> {
                         child: GestureDetector(
                             onTap: () {
                               if (isButtonEnabled(state)) {
+                                if(uploadPhotoFromPhone==null)
+                                {
+                                  _onSubmittedWithoutImage();
+                                }
+                                else{
                                 _onSubmitted();
+                                }
                               } else {}
                             },
                             child: Container(
