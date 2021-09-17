@@ -5,6 +5,7 @@ import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/matches.dart';
 import 'package:flutter_test2/ui/pages/messages.dart';
 import 'package:flutter_test2/ui/pages/search.dart';
+import 'package:flutter_test2/ui/pages/settings.dart';
 
 class Tabs extends StatelessWidget {
   final userId;
@@ -34,11 +35,21 @@ class Tabs extends StatelessWidget {
               ),
               actions: <Widget>[
                 IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Settings()),
+                    );
+                  },
+                ),
+                IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
                     BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                   },
-                )
+                ),
+
               ],
               bottom: PreferredSize(
                   preferredSize: Size.fromHeight(48.0),

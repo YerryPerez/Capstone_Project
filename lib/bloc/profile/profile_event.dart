@@ -61,6 +61,16 @@ class LocationChanged extends ProfileEvent{
   List<Object> get props => [];
 }
 
+class DeleteProfile extends ProfileEvent{
+  final DeleteProfile userId;
+
+  DeleteProfile({@required this.userId});
+  @override
+  List<Object> get props => [];
+}
+
+
+
 class Submitted extends ProfileEvent{
   final String name, gender, interestedIn;
   final DateTime age;
