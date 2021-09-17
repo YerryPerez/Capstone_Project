@@ -16,10 +16,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
-class ProfileForm extends StatefulWidget {
+class ProfileForm2 extends StatefulWidget {
   final UserRepository _userRepository;
 
-  ProfileForm({@required UserRepository userRepository})
+  ProfileForm2({@required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository;
 
@@ -27,7 +27,7 @@ class ProfileForm extends StatefulWidget {
   _ProfileFormState createState() => _ProfileFormState();
 }
 
-class _ProfileFormState extends State<ProfileForm> {
+class _ProfileFormState extends State<ProfileForm2> {
   final TextEditingController _nameController = TextEditingController();
 
   String gender, interestedIn;
@@ -57,6 +57,16 @@ class _ProfileFormState extends State<ProfileForm> {
     location = GeoPoint(position.latitude, position.longitude);
   }
 
+
+  _getCurrentDetails() async {
+    var details = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).get();
+    _nameController.text = details['name'];
+    age = details['age'];
+    gender = details['gender'];
+    interestedIn = details['interestedIn'];
+    photo = details['photoUrl'];
+  }
+
   _onSubmitted() async {
     await _getLocation();
     _profileBloc.add(
@@ -73,6 +83,7 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   void initState() {
     _getLocation();
+    _getCurrentDetails();
     _profileBloc = BlocProvider.of<ProfileBloc>(context);
     super.initState();
   }
