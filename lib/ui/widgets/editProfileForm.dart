@@ -24,7 +24,6 @@ import 'package:flutter_test2/ui/widgets/gender.dart';
 import 'package:flutter_test2/ui/widgets/photo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 
 class editProfileForm extends StatefulWidget {
