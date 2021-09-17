@@ -3,7 +3,7 @@ import 'dart:async';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 
 class MatchesRepository {
   final FirebaseFirestore _firestore;
@@ -27,9 +27,9 @@ class MatchesRepository {
         .snapshots();
   }
 
-  Future<User> getUserDetails(userId) async
+  Future<CitaUser> getUserDetails(userId) async
   {
-    User _user = User();
+    CitaUser _user = CitaUser();
 
     await _firestore.collection('users').doc(userId).get().then((user) {
       _user.uid = user['uid'];
@@ -86,6 +86,7 @@ class MatchesRepository {
     return await _firestore.collection('users').doc(currentUserId).collection(
         'matchedList')
         .doc(selectedUserId).delete();
+
   }
 
   Future<void> deleteUserFromOthersLikes(currentUserId,selectedUserId) async
@@ -100,13 +101,15 @@ class MatchesRepository {
     List<String> chosenList = await getChosenList(currentUserId);
     for(var user in chosenList)
       {
+        //This deletes that one to one matched list relationship
         deleteUserMatchedList(currentUserId, user);
         deleteUserMatchedList(user, currentUserId);
 
-        deleteUserFromLikedYou(currentUserId, user);
+        deleteUserFromLikedYou(user, currentUserId);
 
         deleteUserFromOthersLikes(currentUserId, user);
         deleteUserFromOthersLikes(user, currentUserId);
+
       }
   }
 

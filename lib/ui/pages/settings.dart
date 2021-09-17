@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/bloc/profile/profile_bloc.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/repositories/matchesRepository.dart';
-import 'package:flutter_test2/ui/widgets/profileForm2.dart';
+import 'package:flutter_test2/ui/pages/privacypolicy.dart';
 
 import '../constants.dart';
+import 'editProfile.dart';
 
 class Settings extends StatefulWidget {
   final String userId;
@@ -43,28 +45,16 @@ class _SettingsState extends State<Settings> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               margin: const EdgeInsets.all(8.0),
               child: ListTile(
+                onTap: () async {
+                  User user = FirebaseAuth.instance.currentUser;
+                  CitaUser userAccountInfo =  await _matchesRepository.getUserDetails(user.uid);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfile(userRepository: _userRepository, userAccountInfo: userAccountInfo)),
+                  );
+                },
                 title: Text("Edit Profile") ,
                 trailing: Icon(Icons.edit,color: backgroundColor,) ,
-                onTap: (){
-                  //open edit profile
-                  Widget build(BuildContext context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        title: Text("Profile Setup"),
-                        centerTitle: true,
-                        backgroundColor: backgroundColor,
-                        elevation: 0,
-                      ),
-                      body: BlocProvider<ProfileBloc>(
-                        create: (context) => ProfileBloc(userRepository: _userRepository),
-                        child: ProfileForm2(userRepository: _userRepository,
-
-                        ),
-                      ),
-                    );
-                  }
-                },
-
               ),
             ),
             const SizedBox(height: 10.0,),
@@ -79,7 +69,10 @@ class _SettingsState extends State<Settings> {
                       title: Text("Privacy Policy"),
                       trailing: Icon(Icons.keyboard_arrow_right,color: backgroundColor,),
                       onTap:(){
-                        //open privacy policy
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PrivacyPolicy()),
+                        );
                       }
 
                   ),

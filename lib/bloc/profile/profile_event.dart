@@ -87,3 +87,19 @@ class Submitted extends ProfileEvent{
   @override
   List<Object> get props => [location, name, age, gender, interestedIn, photo];
 }
+
+class SubmittedWithoutImage extends ProfileEvent{
+  final String name, gender, interestedIn, url;
+  final DateTime age;
+  final GeoPoint location;
+
+  SubmittedWithoutImage({@required this.name,
+    @required this.gender,
+    @required this.interestedIn,
+    @required this.age,
+    @required this.location,
+    @required this.url});
+
+  @override
+  List<Object> get props => [location, name, age, gender, interestedIn, url];
+}

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+
 class UserRepository{
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
@@ -72,6 +73,28 @@ class UserRepository{
               });
             });
           });
+  }
+
+  Future<void> profileSetUpWithoutImage(
+      String userId,
+      String name,
+      String gender,
+      String interestedIn,
+      DateTime age,
+      GeoPoint location,
+      String url,
+      ) async{
+
+    await _firestore.collection('users').doc(userId).set({
+              'uid': userId,
+              'photoUrl': url,
+              'name': name,
+              'location': location,
+              'gender': gender,
+              'interestedIn': interestedIn,
+              'age': age
+
+        });
   }
   //TODO: Delete user account
   Future<void> deleteProfile(

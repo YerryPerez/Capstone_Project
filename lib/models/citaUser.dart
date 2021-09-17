@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class CitaUser {
   String uid;
   String name;
   String gender;
@@ -9,7 +9,7 @@ class User {
   Timestamp age;
   GeoPoint location;
 
-  User(
+  CitaUser(
       {this.uid,
         this.name,
         this.gender,

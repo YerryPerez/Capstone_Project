@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test2/models/chat.dart';
 
 import 'package:flutter_test2/models/message.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/messageRepository.dart';
 import 'package:flutter_test2/ui/pages/messaging.dart';
 import 'package:flutter_test2/ui/widgets/pageTurn.dart';
@@ -24,7 +24,7 @@ class ChatWidget extends StatefulWidget {
 class _ChatWidgetState extends State<ChatWidget> {
   MessageRepository messageRepository = MessageRepository();
   Chat chat;
-  User user;
+  CitaUser user;
 
   getUserDetail() async{
   user = await messageRepository.getUserDetail(userId: widget.selectedUserId);
@@ -55,9 +55,9 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   openChat() async {
-    User currentUser = await messageRepository
+    CitaUser currentUser = await messageRepository
         .getUserDetail(userId: widget.userId);
-    User selectedUser = await messageRepository
+    CitaUser selectedUser = await messageRepository
         .getUserDetail(userId: widget.selectedUserId);
     try{
       pageTurn(Messaging(

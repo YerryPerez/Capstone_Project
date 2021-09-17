@@ -14,7 +14,7 @@ class LoadingState extends SearchState {
 
 }
 class LoadUserState extends SearchState {
-  final User user, currentUser;
+  final CitaUser user, currentUser;
 
   LoadUserState(this.user, this.currentUser);
 

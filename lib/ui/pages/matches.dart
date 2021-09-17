@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/matches/matches_bloc.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/matchesRepository.dart';
 import 'package:flutter_test2/ui/widgets/iconWidget.dart';
 import 'package:flutter_test2/ui/widgets/pageTurn.dart';
@@ -82,9 +82,9 @@ class _MatchesState extends State<Matches> {
                             (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () async {
-                              User selectedUser = await matchesRepository
+                              CitaUser selectedUser = await matchesRepository
                                   .getUserDetails(user[index].id);
-                              User currentUser = await matchesRepository
+                              CitaUser currentUser = await matchesRepository
                                   .getUserDetails(widget.userId);
                               await getDifference(selectedUser.location);
                               showDialog(
@@ -236,9 +236,9 @@ class _MatchesState extends State<Matches> {
                             (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () async {
-                              User selectedUser = await matchesRepository
+                              CitaUser selectedUser = await matchesRepository
                                   .getUserDetails(user[index].id);
-                              User currentUser = await matchesRepository
+                              CitaUser currentUser = await matchesRepository
                                   .getUserDetails(widget.userId);
 
                               await getDifference(selectedUser.location);

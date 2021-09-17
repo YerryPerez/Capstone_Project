@@ -7,13 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_test2/bloc/messaging/messaging_bloc.dart';
 import 'package:flutter_test2/models/message.dart';
-import 'package:flutter_test2/models/user.dart';
+import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/messaging.dart';
 import 'package:flutter_test2/ui/widgets/message.dart';
 import 'package:flutter_test2/ui/widgets/photo.dart';
 import 'dart:io';
 import '../constants.dart';class Messaging extends StatefulWidget {
-  final User currentUser, selectedUser;
+  final CitaUser currentUser, selectedUser;
 
   const Messaging({this.currentUser, this.selectedUser});
 
