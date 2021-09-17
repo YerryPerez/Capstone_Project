@@ -57,8 +57,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("Sign Up Failed"),
-                Icon(Icons.error),
+                Text(state.error),
+                Icon(Icons.error, color: Colors.red,),
               ],
             ),),);
         }
