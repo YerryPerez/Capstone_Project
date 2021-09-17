@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/ui/validators.dart';
 import 'package:meta/meta.dart';
@@ -74,11 +75,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       await _userRepository.signInWithEmail(email, password);
-
       yield LoginState.success();
     }
-    catch (_){
-      LoginState.failure();
+    catch (e){
+      print(e);
+      if(e.toString()=="[firebase_auth/wrong-password] The password is invalid or the user does not have a password.") {
+        yield LoginState.failure("Invalid Password");
+      }
+      else if(e.toString()=="[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted."){
+        yield LoginState.failure("Invalid Username");
+      }
+      else {
+        yield LoginState.failure("Login Failed");
+      }
     }
   }
 }

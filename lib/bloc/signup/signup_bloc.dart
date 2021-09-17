@@ -75,8 +75,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       yield SignUpState.success();
     }
-    catch (_){
-      SignUpState.failure();
+    catch (e){
+      print(e);
+      if (e.toString() == ("[firebase_auth/email-already-in-use] The email address is already in use by another account.")){
+        yield SignUpState.failure("The email address already exists");
+      }
+      else {
+        yield SignUpState.failure("Sign Up Failed");
+      }
+
     }
   }
 }

@@ -78,12 +78,13 @@ class _LoginFormState extends State<LoginForm> {
                 content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text("Login Failed"),
-                Icon(Icons.error),
+                Text(state.error),
+                Icon(Icons.error, color: Colors.red,),
               ],
             )));
         }
         if (state.isSubmitting) {
+
           print("isSubmitting");
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
