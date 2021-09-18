@@ -42,6 +42,7 @@ dependencies:
   timeago: ^3.0.2
   uuid: ^3.0.4
   image_downloader: ^0.30.0
+  places_service: ^0.1.0
   #intl: ^0.17.0
 
 

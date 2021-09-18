@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_test2/ui/constants.dart';
+import 'package:flutter_test2/ui/pages/locations.dart';
 import 'package:flutter_test2/ui/pages/matches.dart';
 import 'package:flutter_test2/ui/pages/messages.dart';
 import 'package:flutter_test2/ui/pages/search.dart';
@@ -14,6 +15,7 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
+      Location(),
       Search(userId: userId,),
       Matches(userId: userId,),
       Messages( userId: userId,),
@@ -25,7 +27,7 @@ class Tabs extends StatelessWidget {
         accentColor: Colors.white,
       ),
       child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -60,6 +62,7 @@ class Tabs extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           TabBar(tabs: <Widget>[
+                            Tab(icon: Icon(Icons.add_location)),
                             Tab(icon: Icon(Icons.search)),
                             Tab(icon: Icon(Icons.people)),
                             Tab(icon: Icon(Icons.message)),
