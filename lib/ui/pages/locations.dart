@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/address_search.dart';
 import 'package:flutter_test2/ui/pages/place_service.dart';
 import 'package:uuid/uuid.dart';
@@ -16,13 +17,13 @@ class Location extends StatelessWidget {
         }
       },
       child: MaterialApp(
-        title: 'Google Places Demo',
+        title: 'Locations',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.amber,
+          primarySwatch: backgroundColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(title: 'Places Autocomplete Demo'),
+        home: MyHomePage(title: 'Search For Locations'),
       ),
     );
   }
@@ -89,11 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 10,
                   height: 10,
                   child: Icon(
-                    Icons.home,
+                    Icons.pin_drop,
                     color: Colors.black,
                   ),
                 ),
-                hintText: "Enter your shipping address",
+                hintText: "Search Here",
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 8.0, top: 16.0),
               ),
