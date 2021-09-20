@@ -48,7 +48,7 @@ class PlaceApiProvider {
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     // var url = Uri.parse('https://www.googleapis.com/books/v1/volumes?q={http}');
     // http.Response response = await http.get(url);
-    var request = Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&components=country:us&key=$apiKey&sessiontoken=$sessionToken');
+    var request = Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=establishment&language=$lang&components=country:us&key=$apiKey&sessiontoken=$sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
