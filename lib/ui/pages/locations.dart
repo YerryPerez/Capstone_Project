@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/address_search.dart';
 import 'package:flutter_test2/ui/pages/place_service.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_test2/repositories/userRepository.dart';
 
 class Location extends StatelessWidget {
   // This widget is the root of your application.
@@ -44,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String _street = '';
   String _city = '';
   String _zipCode = '';
+  String _fullAddress = '';
+  final UserRepository _userRepository = UserRepository();
 
   @override
   void dispose() {
@@ -82,7 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     _street = placeDetails.street;
                     _city = placeDetails.city;
                     _zipCode = placeDetails.zipCode;
+                    _fullAddress = _streetNumber + _street + _city + _zipCode;
                   });
+                  User user = FirebaseAuth.instance.currentUser;
+                  await _userRepository.addLocationPreference(_fullAddress, _streetNumber, _street, _city, _zipCode);
+                  await _userRepository.addUserToLocationCollection(_fullAddress, user.uid.toString());
                 }
               },
               decoration: InputDecoration(

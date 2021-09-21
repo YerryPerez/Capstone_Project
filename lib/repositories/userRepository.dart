@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class UserRepository{
@@ -103,6 +104,21 @@ class UserRepository{
     return  await _firestore.collection('users').doc(userId).delete();
   }
 
+  Future<void> addLocationPreference(String collectionID,String streetNumber, String streetName, String city, String zipcode) async
+  {
+    return await _firestore.collection("locations").doc(collectionID).set(
+      {
+        'streetNumber':streetNumber,
+        'streetName' : streetName,
+        'city' : city,
+        'zipcode': zipcode
+      });
+  }
+
+  Future<void> addUserToLocationCollection(String collectionID, String UserId) async
+  {
+    return await _firestore.collection('locations').doc(collectionID).collection(UserId).doc(UserId.toString()).set({});
+  }
 
 
 }
