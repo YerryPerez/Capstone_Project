@@ -89,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     _fullAddress = _streetNumber + " ," + _street + " ," + _city + " ," + _zipCode;
                   });
                   User user = FirebaseAuth.instance.currentUser;
-                  await _userRepository.addLocationPreference(_fullAddress, _streetNumber, _street, _city, _zipCode);
-                  await _userRepository.addUserToLocationCollection(_fullAddress, user.uid.toString());
+                  // await _userRepository.addLocationPreference(_fullAddress, _streetNumber, _street, _city, _zipCode);
+                  // await _userRepository.addUserToLocationCollection(_fullAddress, user.uid.toString());
                   await _userRepository.addLocationToUserCollection(_fullAddress, user.uid.toString());
                 }
               },
