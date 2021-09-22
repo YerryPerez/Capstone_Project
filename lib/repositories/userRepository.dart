@@ -120,5 +120,8 @@ class UserRepository{
     return await _firestore.collection('locations').doc(collectionID).collection(UserId).doc(UserId.toString()).set({});
   }
 
-
+  Future<void> addLocationToUserCollection(String collectionID, String UserId) async
+  {
+    return await _firestore.collection('users').doc(UserId).collection('Location Preferences').doc(collectionID).set({});
+  }
 }
