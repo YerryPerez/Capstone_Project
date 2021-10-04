@@ -60,7 +60,6 @@ class SearchRepository {
       currentUser.name = user['name'];
       currentUser.photo = user['photoUrl'];
       currentUser.gender = user['gender'];
-      currentUser.interestedIn = user['interestedIn'];
     });
     return currentUser;
   }
@@ -113,15 +112,13 @@ class SearchRepository {
    .get().then((users) async {
      for(var user in users.docs){
        List<String> preferencesOfOtherUser = await getUserLocations(user.id);
-       if (preferencesOfCurrentUser.any((element) => preferencesOfOtherUser.contains(element))
-       && !chosenList.contains(user.id) && user.id!=userId){
+       if (!chosenList.contains(user.id) && user.id != userId){
          _user.uid = user.id;
          _user.name = user['name'];
          _user.photo = user['photoUrl'];
          _user.age = user['age'];
          _user.location = user['location'];
          _user.gender = user['gender'];
-         _user.interestedIn = user['interestedIn'];
          break;
        }
      }
