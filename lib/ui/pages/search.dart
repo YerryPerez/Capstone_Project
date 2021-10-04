@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/search/search_bloc.dart';
 import 'package:flutter_test2/models/citaUser.dart';
 import 'package:flutter_test2/repositories/searchRepository.dart';
+import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/widgets/iconWidget.dart';
 import 'package:flutter_test2/ui/widgets/profile.dart';
 import 'package:flutter_test2/ui/widgets/userGender.dart';
@@ -133,8 +135,6 @@ class _SearchState extends State<Search> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              iconWidget(EvaIcons.flash, () {},
-                                  size.height * .04, Colors.yellow),
                               iconWidget(Icons.clear, () {
                                 _searchBloc.add(
                                     PassUserEvent(widget.userId, _user.uid));
@@ -148,7 +148,7 @@ class _SearchState extends State<Search> {
                                       selectedUserId: _user.uid),
                                 );
                               }, size.height * 0.06, Colors.red),
-                              iconWidget(EvaIcons.options2, () async {
+                              iconWidget(FontAwesomeIcons.mapMarked, () async {
                                 List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());
                                 List<String> list2 = await _searchRepository.getUserLocations(_user.uid.toString());
                                 var commonLocations = [];
@@ -160,6 +160,23 @@ class _SearchState extends State<Search> {
                                     }
                                   }
                                 print(commonLocations);
+                                showCupertinoModalPopup(context: context, builder: (BuildContext context)
+                                {
+                                  return Scaffold(
+                                    appBar: AppBar(
+                                      backgroundColor: backgroundColor,
+                                      title: Text("Common Location Interests"),
+                                    ),
+                                    // height: MediaQuery.of(context).size.height * 0.5,
+                                    // width: MediaQuery.of(context).size.width,
+                                    body: ListView.builder(
+                                     itemBuilder: (context, index) => ListTile(
+                                       subtitle: Text((commonLocations[index]),
+                                     ),
+                                   ),
+                                     itemCount: commonLocations.length,
+                                   ));
+                                });
                               },
                                   size.height * .04, Colors.white),
                             ],
