@@ -59,7 +59,6 @@ class SearchRepository {
       currentUser.name = user['name'];
       currentUser.photo = user['photoUrl'];
       currentUser.gender = user['gender'];
-      currentUser.interestedIn = user['interestedIn'];
     });
     return currentUser;
   }
@@ -90,15 +89,13 @@ class SearchRepository {
    await _firestore.collection('users')
    .get().then((users){
      for(var user in users.docs){
-       if (!chosenList.contains(user.id) && user.id != userId
-           && currentUser.interestedIn == user['gender'] && user['interestedIn'] == currentUser.gender){
+       if (!chosenList.contains(user.id) && user.id != userId){
          _user.uid = user.id;
          _user.name = user['name'];
          _user.photo = user['photoUrl'];
          _user.age = user['age'];
          _user.location = user['location'];
          _user.gender = user['gender'];
-         _user.interestedIn = user['interestedIn'];
          break;
        }
      }

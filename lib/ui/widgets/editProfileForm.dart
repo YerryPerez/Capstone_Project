@@ -46,7 +46,6 @@ class _EditProfileForm extends State<editProfileForm> {
 
 
   String gender;
-  String interestedIn;
   DateTime age;
   File uploadPhotoFromPhone;
   GeoPoint location;
@@ -60,7 +59,6 @@ class _EditProfileForm extends State<editProfileForm> {
   bool get isFilled =>
       _nameController.text.isNotEmpty &&
       gender != null &&
-      interestedIn != null &&
       age != null;
 
   bool isButtonEnabled(ProfileState state) {
@@ -77,7 +75,6 @@ class _EditProfileForm extends State<editProfileForm> {
      _nameController.text = _userAccountInfo.name;
      age = _userAccountInfo.age.toDate();
      gender = _userAccountInfo.gender;
-     interestedIn = _userAccountInfo.interestedIn;
      photo = _userAccountInfo.photo;
     }
 
@@ -89,7 +86,6 @@ class _EditProfileForm extends State<editProfileForm> {
           age: age,
           location: location,
           gender: gender,
-          interestedIn: interestedIn,
           photo: uploadPhotoFromPhone),
     );
   }
@@ -102,7 +98,6 @@ class _EditProfileForm extends State<editProfileForm> {
           age: age,
           location: location,
           gender: gender,
-          interestedIn: interestedIn,
           url: photo
           ),
     );
@@ -275,39 +270,6 @@ class _EditProfileForm extends State<editProfileForm> {
                         ),
                         SizedBox(
                           height: size.height * .02,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.height * .02),
-                          child: Text(
-                            "Interested in",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size.width * .09),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            genderWidget(FontAwesomeIcons.venus, "Female", size,
-                                interestedIn, () {
-                              setState(() {
-                                interestedIn = "Female";
-                              });
-                            }),
-                            genderWidget(FontAwesomeIcons.mars, "Male", size,
-                                interestedIn, () {
-                              setState(() {
-                                interestedIn = "Male";
-                              });
-                            }),
-                            genderWidget(FontAwesomeIcons.transgender,
-                                "Transgender", size, interestedIn, () {
-                              setState(() {
-                                interestedIn = "Transgender";
-                              });
-                            }),
-                          ],
                         ),
                       ],
                     ),

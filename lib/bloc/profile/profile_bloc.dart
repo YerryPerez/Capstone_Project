@@ -34,9 +34,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     else if(event is GenderChanged){
     yield* _mapGenderChangedToState(event.gender);
     }
-    else if(event is InterestedInChanged){
-      yield* _mapInterestedInChangedToState(event.interestedIn);
-    }
     else if(event is LocationChanged){
       yield* _mapLocationChangedToState(event.location);
     }
@@ -54,8 +51,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         gender: event.gender,
         userId: uid,
         age: event.age,
-        location: event.location,
-        interestedIn: event.interestedIn
+        location: event.location
       );
     }
     else if(event is SubmittedWithoutImage){
@@ -67,7 +63,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           userId: uid,
           age: event.age,
           location: event.location,
-          interestedIn: event.interestedIn,
           url: event.url
       );
     }
@@ -98,18 +93,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       isLocationEmpty: location == null,
     );
   }
-  Stream <ProfileState> _mapInterestedInChangedToState(String interestedIn) async* {
-    yield state.update(
-      isInterestedInEmpty: interestedIn == null,
-    );
-  }
 
   Stream<ProfileState> _mapSubmittedToState({File photo, String name, String gender, String userId,
-    DateTime age, GeoPoint location, String interestedIn}) async* {
+    DateTime age, GeoPoint location}) async* {
       yield ProfileState.loading();
       try{
         await _userRepository.profileSetUp(photo, userId, name,
-            gender, interestedIn, age, location);
+            gender, age, location);
         yield ProfileState.success();
       }
       catch (_){
@@ -118,11 +108,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Stream<ProfileState> _mapSubmittedWithoutImageToState({String name, String gender, String userId,
-    DateTime age, GeoPoint location, String interestedIn, String url}) async* {
+    DateTime age, GeoPoint location, String url}) async* {
     yield ProfileState.loading();
     try{
       await _userRepository.profileSetUpWithoutImage(userId, name,
-          gender, interestedIn, age, location, url);
+          gender, age, location, url);
       yield ProfileState.success();
     }
     catch (_){

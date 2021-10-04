@@ -29,7 +29,7 @@ class ProfileForm extends StatefulWidget {
 class _ProfileFormState extends State<ProfileForm> {
   final TextEditingController _nameController = TextEditingController();
 
-  String gender, interestedIn;
+  String gender;
   DateTime age;
   File photo;
   GeoPoint location;
@@ -41,7 +41,6 @@ class _ProfileFormState extends State<ProfileForm> {
   bool get isFilled =>
       _nameController.text.isNotEmpty &&
       gender != null &&
-      interestedIn != null &&
       photo != null &&
       age != null;
 
@@ -64,7 +63,6 @@ class _ProfileFormState extends State<ProfileForm> {
           age: age,
           location: location,
           gender: gender,
-          interestedIn: interestedIn,
           photo: photo),
     );
   }
@@ -228,39 +226,6 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                         SizedBox(
                           height: size.height * .02,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.height * .02),
-                          child: Text(
-                            "Interested in",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size.width * .09),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            genderWidget(FontAwesomeIcons.venus, "Female", size,
-                                interestedIn, () {
-                              setState(() {
-                                interestedIn = "Female";
-                              });
-                            }),
-                            genderWidget(FontAwesomeIcons.mars, "Male", size,
-                                interestedIn, () {
-                              setState(() {
-                                interestedIn = "Male";
-                              });
-                            }),
-                            genderWidget(FontAwesomeIcons.transgender,
-                                "Transgender", size, interestedIn, () {
-                              setState(() {
-                                interestedIn = "Transgender";
-                              });
-                            }),
-                          ],
                         ),
                       ],
                     ),
