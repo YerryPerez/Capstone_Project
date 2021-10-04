@@ -120,6 +120,7 @@ class _ProfileFormState extends State<ProfileForm> {
           child: Container(
               color: backgroundColor,
               width: size.width,
+              height: size.height,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
