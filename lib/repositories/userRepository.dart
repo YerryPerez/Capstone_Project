@@ -53,7 +53,6 @@ class UserRepository{
       String userId,
       String name,
       String gender,
-      String interestedIn,
       DateTime age,
       GeoPoint location
       ) async{
@@ -69,7 +68,6 @@ class UserRepository{
                 'name': name,
                 'location': location,
                 'gender': gender,
-                'interestedIn': interestedIn,
                 'age': age
               });
             });
@@ -80,7 +78,6 @@ class UserRepository{
       String userId,
       String name,
       String gender,
-      String interestedIn,
       DateTime age,
       GeoPoint location,
       String url,
@@ -92,7 +89,6 @@ class UserRepository{
               'name': name,
               'location': location,
               'gender': gender,
-              'interestedIn': interestedIn,
               'age': age
 
         });

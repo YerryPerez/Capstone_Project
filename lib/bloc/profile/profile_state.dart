@@ -6,7 +6,6 @@ class ProfileState {
   final bool isNameEmpty;
   final bool isAgeEmpty;
   final bool isGenderEmpty;
-  final bool isInterestedInEmpty;
   final bool isLocationEmpty;
   final bool isFailure;
   final bool isSubmitting;
@@ -16,8 +15,7 @@ class ProfileState {
       isPhotoEmpty &&
       isNameEmpty &&
       isAgeEmpty &&
-      isGenderEmpty &&
-      isInterestedInEmpty;
+      isGenderEmpty;
 
   ProfileState({
     @required this.isPhotoEmpty,
@@ -25,7 +23,6 @@ class ProfileState {
     @required this.isNameEmpty,
     @required this.isAgeEmpty,
     @required this.isGenderEmpty,
-    @required this.isInterestedInEmpty,
     @required this.isLocationEmpty,
     @required this.isFailure,
     @required this.isSubmitting,
@@ -40,7 +37,6 @@ class ProfileState {
       isNameEmpty: false,
       isAgeEmpty: false,
       isGenderEmpty: false,
-      isInterestedInEmpty: false,
       isLocationEmpty: false,
     );
   }
@@ -54,7 +50,6 @@ class ProfileState {
       isNameEmpty: false,
       isAgeEmpty: false,
       isGenderEmpty: false,
-      isInterestedInEmpty: false,
       isLocationEmpty: false,
     );
   }
@@ -68,7 +63,6 @@ class ProfileState {
       isNameEmpty: false,
       isAgeEmpty: false,
       isGenderEmpty: false,
-      isInterestedInEmpty: false,
       isLocationEmpty: false,
     );
   }
@@ -82,7 +76,6 @@ class ProfileState {
       isNameEmpty: false,
       isAgeEmpty: false,
       isGenderEmpty: false,
-      isInterestedInEmpty: false,
       isLocationEmpty: false,
     );
   }
@@ -91,7 +84,6 @@ class ProfileState {
     bool isNameEmpty,
     bool isAgeEmpty,
     bool isGenderEmpty,
-    bool isInterestedInEmpty,
     bool isLocationEmpty,
   }) {
     return copyWith(
@@ -102,7 +94,6 @@ class ProfileState {
       isNameEmpty: isNameEmpty,
       isAgeEmpty: isAgeEmpty,
       isGenderEmpty: isGenderEmpty,
-      isInterestedInEmpty: isInterestedInEmpty,
       isLocationEmpty: isLocationEmpty,
     );
   }
@@ -112,7 +103,6 @@ class ProfileState {
     bool isNameEmpty,
     bool isAgeEmpty,
     bool isGenderEmpty,
-    bool isInterestedInEmpty,
     bool isLocationEmpty,
     bool isSubmitting,
     bool isSuccess,
@@ -122,7 +112,6 @@ class ProfileState {
       isPhotoEmpty: isPhotoEmpty ?? this.isPhotoEmpty,
       isNameEmpty: isNameEmpty ?? this.isNameEmpty,
       isLocationEmpty: isLocationEmpty ?? this.isLocationEmpty,
-      isInterestedInEmpty: isInterestedInEmpty ?? this.isInterestedInEmpty,
       isGenderEmpty: isGenderEmpty ?? this.isGenderEmpty,
       isAgeEmpty: isAgeEmpty ?? this.isAgeEmpty,
       isSubmitting: isSubmitting ?? this.isSubmitting,

@@ -41,7 +41,6 @@ class MessageRepository{
     _user.age = user['age'];
     _user.location = user['location'];
     _user.gender = user['gender'];
-    _user.interestedIn = user['interestedIn'];
     });
     return _user;
   }
