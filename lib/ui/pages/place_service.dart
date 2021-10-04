@@ -8,12 +8,14 @@ class Place {
   String street;
   String city;
   String zipCode;
+  String name;
 
   Place({
     this.streetNumber,
     this.street,
     this.city,
     this.zipCode,
+    this.name
   });
 
   @override
@@ -72,7 +74,7 @@ class PlaceApiProvider {
   Future<Place> getPlaceDetailFromId(String placeId) async {
     print("2nd request");
     var request =
-        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken');
+        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,name&key=$apiKey&sessiontoken=$sessionToken');
     print(request);
     final response = await client.get(request);
 
@@ -97,6 +99,7 @@ class PlaceApiProvider {
           if (type.contains('postal_code')) {
             place.zipCode = c['long_name'];
           }
+          place.name = result['result']['name'];
         });
         return place;
       }

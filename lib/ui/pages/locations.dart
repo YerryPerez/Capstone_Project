@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _city = '';
   String _zipCode = '';
   String _fullAddress = '';
+  String _locationName ='';
   final UserRepository _userRepository = UserRepository();
 
   @override
@@ -86,10 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     _street = placeDetails.street;
                     _city = placeDetails.city;
                     _zipCode = placeDetails.zipCode;
-                    _fullAddress = _streetNumber + " ," + _street + " ," + _city + " ," + _zipCode;
+                    _locationName = placeDetails.name;
+                    _fullAddress = _streetNumber + " ," + _street + " ," + _city + " ," + _zipCode + " ," +_locationName;
                   });
                   User user = FirebaseAuth.instance.currentUser;
-                  // await _userRepository.addLocationPreference(_fullAddress, _streetNumber, _street, _city, _zipCode);
+                  await _userRepository.addLocationPreference(_fullAddress, _streetNumber, _street, _city, _zipCode,_locationName);
                   // await _userRepository.addUserToLocationCollection(_fullAddress, user.uid.toString());
                   await _userRepository.addLocationToUserCollection(_fullAddress, user.uid.toString());
                 }
@@ -113,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text('Street: $_street'),
             Text('City: $_city'),
             Text('ZIP Code: $_zipCode'),
+            Text('Location Name: $_locationName')
           ],
         ),
       ),

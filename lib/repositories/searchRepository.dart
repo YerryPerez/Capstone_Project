@@ -101,28 +101,30 @@ class SearchRepository {
   }
 
   Future<CitaUser> getUser(userId) async{
-   CitaUser _user = CitaUser();
-   List<String> chosenList = await getChosenList(userId);
-   // User currentUser = await getUserInterests(userId);
-   List<String> preferencesOfCurrentUser = await getUserLocations(userId);
+    CitaUser _user = CitaUser();
+    List<String> chosenList = await getChosenList(userId);
+    // User currentUser = await getUserInterests(userId);
+    List<String> preferencesOfCurrentUser = await getUserLocations(userId);
 
-   // Set<String> potentialMatches = await getPotentialMatches(userId);
+    // Set<String> potentialMatches = await getPotentialMatches(userId);
 
-   await _firestore.collection('users')
-   .get().then((users) async {
-     for(var user in users.docs){
-       List<String> preferencesOfOtherUser = await getUserLocations(user.id);
-       if (!chosenList.contains(user.id) && user.id != userId){
-         _user.uid = user.id;
-         _user.name = user['name'];
-         _user.photo = user['photoUrl'];
-         _user.age = user['age'];
-         _user.location = user['location'];
-         _user.gender = user['gender'];
-         break;
-       }
-     }
-   });
-   return _user;
+    await _firestore.collection('users')
+        .get().then((users) async {
+      for(var user in users.docs){
+        List<String> preferencesOfOtherUser = await getUserLocations(user.id);
+        if (preferencesOfCurrentUser.any((element) => preferencesOfOtherUser.contains(element))
+            && !chosenList.contains(user.id) && user.id!=userId){
+          _user.uid = user.id;
+          _user.name = user['name'];
+          _user.photo = user['photoUrl'];
+          _user.age = user['age'];
+          _user.location = user['location'];
+          _user.gender = user['gender'];
+          break;
+        }
+      }
+    });
+    return _user;
   }
 }
+

@@ -100,14 +100,15 @@ class UserRepository{
     return  await _firestore.collection('users').doc(userId).delete();
   }
 
-  Future<void> addLocationPreference(String collectionID,String streetNumber, String streetName, String city, String zipcode) async
+  Future<void> addLocationPreference(String collectionID,String streetNumber, String streetName, String city, String zipcode, String locationName) async
   {
     return await _firestore.collection("locations").doc(collectionID).set(
       {
         'streetNumber':streetNumber,
         'streetName' : streetName,
         'city' : city,
-        'zipcode': zipcode
+        'zipcode': zipcode,
+        'locationName' : locationName
       });
   }
 

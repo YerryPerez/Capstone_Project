@@ -10,7 +10,7 @@ import 'package:flutter_test2/ui/widgets/profile.dart';
 import 'package:flutter_test2/ui/widgets/userGender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:flutter_test2/repositories/searchRepository.dart';
 class Search extends StatefulWidget {
   final String userId;
 
@@ -148,7 +148,19 @@ class _SearchState extends State<Search> {
                                       selectedUserId: _user.uid),
                                 );
                               }, size.height * 0.06, Colors.red),
-                              iconWidget(EvaIcons.options2, () {},
+                              iconWidget(EvaIcons.options2, () async {
+                                List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());
+                                List<String> list2 = await _searchRepository.getUserLocations(_user.uid.toString());
+                                var commonLocations = [];
+                                for(String s in list1)
+                                  {
+                                    if(list2.contains(s)) {
+                                      String name = s.substring(s.lastIndexOf(",") + 1,s.length);
+                                      commonLocations.add(name);
+                                    }
+                                  }
+                                print(commonLocations);
+                              },
                                   size.height * .04, Colors.white),
                             ],
                           )
