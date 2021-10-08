@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/search/search_bloc.dart';
 import 'package:flutter_test2/models/citaUser.dart';
@@ -176,13 +177,39 @@ class _SearchState extends State<Search> {
                                     // height: MediaQuery.of(context).size.height * 0.5,
                                     // width: MediaQuery.of(context).size.width,
                                     body: ListView.builder(
-                                     itemBuilder: (context, index) => ListTile(
-                                       title: Text(commonLocations[index].locationName),
-                                       subtitle: Text((commonLocations[index].locationAddress),
-                                     ),
+                                      itemCount: commonLocations.length,
+                                      itemBuilder: (context, index){
+                                        return Container(
+                                            child: Card(
+                                              
+                                                elevation: 2.0,
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                                margin: const EdgeInsets.all(1.0),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(16.0),
+                                              child: Column(
+                                                children:<Widget> [
+                                                  Row(
+                                              children:<Widget> [
+                                                  Text(commonLocations[index].locationName,style: new TextStyle(fontSize: 20.0)),
+                                                  ]),
+                                            Row(
+                                              children:<Widget> [
+                                              Text((commonLocations[index].locationAddress)),
+                                      ])
+                                              ],
+                                              ),)
+
+                                      )
+                                      );
+                                      // title: Text(commonLocations[index].locationName),
+                                       //subtitle: Text((commonLocations[index].locationAddress),
+
+                                        }
                                    ),
-                                     itemCount: commonLocations.length,
-                                   ));
+                                   //  itemCount: commonLocations.length,
+                                  // ),
+                                  );
                                 });
                               },
                                   size.height * .04, Colors.white),
