@@ -15,7 +15,7 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      Location(),
+      Locations(),
       Search(userId: userId,),
       Matches(userId: userId,),
       Messages( userId: userId,),
