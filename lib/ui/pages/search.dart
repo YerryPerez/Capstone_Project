@@ -191,7 +191,7 @@ class _SearchState extends State<Search> {
                                                 children:<Widget> [
                                                   Row(
                                               children:<Widget> [
-                                                  Text(commonLocations[index].locationName,style: new TextStyle(fontSize: 20.0)),
+                                                  Text(commonLocations[index].locationName,style: new TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold,)),
                                                   ]),
                                             Row(
                                               children:<Widget> [
