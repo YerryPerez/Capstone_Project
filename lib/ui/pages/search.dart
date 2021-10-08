@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test2/bloc/search/search_bloc.dart';
 import 'package:flutter_test2/models/citaUser.dart';
+import 'package:flutter_test2/models/location.dart';
 import 'package:flutter_test2/repositories/searchRepository.dart';
 import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/widgets/iconWidget.dart';
@@ -151,12 +152,17 @@ class _SearchState extends State<Search> {
                               iconWidget(FontAwesomeIcons.mapMarked, () async {
                                 List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());
                                 List<String> list2 = await _searchRepository.getUserLocations(_user.uid.toString());
-                                var commonLocations = [];
+                                List<Location> commonLocations = [];
                                 for(String s in list1)
                                   {
                                     if(list2.contains(s)) {
-                                      String name = s.substring(s.lastIndexOf(",") + 1,s.length);
-                                      commonLocations.add(name);
+                                     // String name = s.substring(s.lastIndexOf(",") + 1,s.length);
+                                      List<String> locationDetails = s.split(",");
+                                      String address = s.substring(0,s.lastIndexOf(","));
+                                      Location localWithName = Location();
+                                      localWithName.locationName = locationDetails[locationDetails.length-1];
+                                      localWithName.locationAddress = locationDetails[0]+locationDetails[1]+"\n"+locationDetails[2]+" "+locationDetails[3]+"\n";
+                                      commonLocations.add(localWithName);
                                     }
                                   }
                                 print(commonLocations);
@@ -171,7 +177,8 @@ class _SearchState extends State<Search> {
                                     // width: MediaQuery.of(context).size.width,
                                     body: ListView.builder(
                                      itemBuilder: (context, index) => ListTile(
-                                       subtitle: Text((commonLocations[index]),
+                                       title: Text(commonLocations[index].locationName),
+                                       subtitle: Text((commonLocations[index].locationAddress),
                                      ),
                                    ),
                                      itemCount: commonLocations.length,
