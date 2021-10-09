@@ -43,6 +43,9 @@ dependencies:
   uuid: ^3.0.4
   image_downloader: ^0.30.0
   places_service: ^0.1.0
+  dio: ^4.0.0
+  flutter_polyline_points: ^0.2.6
+  google_maps_flutter: ^2.0.2
   #intl: ^0.17.0
 
 

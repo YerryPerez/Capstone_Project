@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 
 class Place {
@@ -9,13 +10,15 @@ class Place {
   String city;
   String zipCode;
   String name;
+  LatLng location;
 
   Place({
     this.streetNumber,
     this.street,
     this.city,
     this.zipCode,
-    this.name
+    this.name,
+    this.location
   });
 
   @override
@@ -74,12 +77,13 @@ class PlaceApiProvider {
   Future<Place> getPlaceDetailFromId(String placeId) async {
     print("2nd request");
     var request =
-        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,name&key=$apiKey&sessiontoken=$sessionToken');
+        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,name,geometry&key=$apiKey&sessiontoken=$sessionToken');
     print(request);
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
       final result = json.decode(response.body);
+
       if (result['status'] == 'OK') {
         final components =
         result['result']['address_components'] as List<dynamic>;
@@ -100,6 +104,8 @@ class PlaceApiProvider {
             place.zipCode = c['long_name'];
           }
           place.name = result['result']['name'];
+          place.location = new LatLng(result['result']['geometry']['location']['lat'], result['result']['geometry']['location']['lng']);
+          print(place.location);
         });
         return place;
       }

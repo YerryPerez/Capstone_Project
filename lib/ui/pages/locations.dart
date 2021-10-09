@@ -4,11 +4,14 @@ import 'package:flutter_test2/repositories/searchRepository.dart';
 import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/address_search.dart';
 import 'package:flutter_test2/ui/pages/place_service.dart';
+import 'package:flutter_test2/ui/widgets/map.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
 import 'package:flutter_test2/models/location.dart';
 
 class Locations extends StatelessWidget {
+  LatLng temp;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _zipCode = '';
   String _fullAddress = '';
   String _locationName = '';
+  LatLng _locationCords;
   final UserRepository _userRepository = UserRepository();
   final SearchRepository _searchRepository = SearchRepository();
 
@@ -62,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var s in data) {
       List<String> locationDetails = s.split(",");
       Location localWithName = Location();
-      localWithName.locationName = locationDetails[locationDetails.length-1];
+      localWithName.locationName = locationDetails[4];
       if (localWithName.locationName.length > 40){
         String s = localWithName.locationName;
         s = s.substring(0, 40);
@@ -70,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         localWithName.locationName = s + "...";
       }
       localWithName.locationAddress = locationDetails[0]+locationDetails[1]+"\n"+locationDetails[2]+" "+locationDetails[3]+"\n";
+      localWithName.latLong = new LatLng(double.parse(locationDetails[5]), double.parse(locationDetails[6]));
       locations.add(localWithName);
     }
     return locations;
@@ -103,11 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
               _city = placeDetails.city;
               _zipCode = placeDetails.zipCode;
               _locationName = placeDetails.name;
-              _fullAddress = _streetNumber + " ," + _street + " ," + _city + " ," + _zipCode + " ," + _locationName;
+              _locationCords = placeDetails.location;
+
+              _fullAddress = _streetNumber + " ," + _street + " ," + _city + " ," + _zipCode + " ," + _locationName + " ," + _locationCords.latitude.toString() + " ," + _locationCords.longitude.toString();
             });
             User user = FirebaseAuth.instance.currentUser;
             await _userRepository.addLocationPreference(_fullAddress,
-                _streetNumber, _street, _city, _zipCode, _locationName);
+                _streetNumber, _street, _city, _zipCode, _locationName, _locationCords );
             // await _userRepository.addUserToLocationCollection(_fullAddress, user.uid.toString());
             await _userRepository.addLocationToUserCollection(
                 _fullAddress, user.uid.toString());
@@ -132,8 +139,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        child: Card(
+                    return new GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapScreen(destinationPosition: snapshot.data[index].latLong, currentPosition: snapshot.data[index].latLong))
+                        );
+                      },
+
+                        child: Container(
+                          child:Card(
                             elevation: 2.0,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                             margin: const EdgeInsets.all(1.0),
@@ -141,19 +156,23 @@ class _MyHomePageState extends State<MyHomePage> {
                               padding: EdgeInsets.all(16.0),
                               child: Column(
                                 children:<Widget> [
-                                  Row(
+
+                                   Row(
                                       children:<Widget> [
                                         Text(snapshot.data[index].locationName,style: new TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold,)),
                                       ]),
+
                                   Row(
                                       children:<Widget> [
                                         Text((snapshot.data[index].locationAddress)),
                                       ])
+                                  ,
+
                                 ],
                               ),)
 
                         )
-                    );
+                    ));
                     // return ListTile(
                     //   title: Text(snapshot.data[index].toString()),
                     // );

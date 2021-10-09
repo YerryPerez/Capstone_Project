@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class UserRepository{
@@ -100,7 +101,7 @@ class UserRepository{
     return  await _firestore.collection('users').doc(userId).delete();
   }
 
-  Future<void> addLocationPreference(String collectionID,String streetNumber, String streetName, String city, String zipcode, String locationName) async
+  Future<void> addLocationPreference(String collectionID,String streetNumber, String streetName, String city, String zipcode, String locationName, LatLng locationCords) async
   {
     return await _firestore.collection("locations").doc(collectionID).set(
       {
@@ -108,7 +109,9 @@ class UserRepository{
         'streetName' : streetName,
         'city' : city,
         'zipcode': zipcode,
-        'locationName' : locationName
+        'locationName' : locationName,
+        'lat' : locationCords.latitude,
+        'lng' : locationCords.longitude
       });
   }
 
