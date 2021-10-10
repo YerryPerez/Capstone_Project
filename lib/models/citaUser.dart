@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CitaUser {
+
   String uid;
   String name;
   String gender;
