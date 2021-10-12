@@ -5,6 +5,7 @@ import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/address_search.dart';
 import 'package:flutter_test2/ui/pages/place_service.dart';
 import 'package:flutter_test2/ui/widgets/map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_test2/repositories/userRepository.dart';
@@ -140,10 +141,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return new GestureDetector(
-                      onTap: (){
+                      onTap: () async {
+                        ScaffoldMessenger.of(context)
+                          ..hideCurrentSnackBar()
+                          ..showSnackBar(SnackBar(
+                            duration: Duration(seconds: 2),
+                              content: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Loading Map..."),
+                                  CircularProgressIndicator(),
+                                ],
+                              )));
+                        Position pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                        LatLng curr = new LatLng(pos.latitude, pos.longitude);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MapScreen(destinationPosition: snapshot.data[index].latLong, currentPosition: snapshot.data[index].latLong))
+                          MaterialPageRoute(builder: (context) => MapScreen(destinationPosition: snapshot.data[index].latLong, currentPosition: curr))
                         );
                       },
 

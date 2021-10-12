@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test2/models/directions.dart';
 import 'package:flutter_test2/repositories/directionsRepository.dart';
+import 'package:flutter_test2/ui/constants.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -60,10 +63,12 @@ class _MapScreenState extends State<MapScreen> {
 void initState() {
     // TODO: implement initState
     super.initState();
-    _origin = new Marker(markerId: MarkerId('Origin') , position: widget.currentPosition);
-    _destination = new Marker(markerId: MarkerId('Destination') , position: widget.destinationPosition);
-    Geolocator loc = new Geolocator();
-    // cameraOrigin = loc.getCurrentPosition(desiredAccuracy: LocationAccuracy.high) as LatLng;
+
+    //_origin = new Marker(markerId: MarkerId('Origin') , position: widget.currentPosition);
+    _addMarker(widget.currentPosition);
+    _addMarker(widget.destinationPosition);
+    //_destination = new Marker(markerId: MarkerId('Destination') , position: widget.destinationPosition);
+
 
   }
 
@@ -71,6 +76,7 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: backgroundColor,
         centerTitle: false,
         title: const Text('Google Maps'),
         actions: [
@@ -116,8 +122,12 @@ void initState() {
         alignment: Alignment.center,
         children: [
           GoogleMap(
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+              new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer(),),
+            ].toSet(),
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
+            zoomGesturesEnabled: true,
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: (controller) => _googleMapController = controller,
             markers: {
@@ -157,7 +167,7 @@ void initState() {
                   ],
                 ),
                 child: Text(
-                  '${_info.totalDistance}, ${_info.totalDuration}',
+                  '${_info.totalDistance}, ${_info.totalDuration},',
                   style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
