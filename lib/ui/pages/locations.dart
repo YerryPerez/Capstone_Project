@@ -5,6 +5,7 @@ import 'package:flutter_test2/ui/constants.dart';
 import 'package:flutter_test2/ui/pages/address_search.dart';
 import 'package:flutter_test2/ui/pages/place_service.dart';
 import 'package:flutter_test2/ui/widgets/map.dart';
+import 'package:flutter_test2/ui/widgets/tabs.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -67,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var s in data) {
       List<String> locationDetails = s.split(",");
       Location localWithName = Location();
+      localWithName.fullName = s;
       localWithName.locationName = locationDetails[4];
       if (localWithName.locationName.length > 40){
         String s = localWithName.locationName;
@@ -160,6 +162,43 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(builder: (context) => MapScreen(destinationPosition: snapshot.data[index].latLong, currentPosition: curr))
                         );
                       },
+                        onLongPress:(){
+                          showDialog(context: context,
+                              builder:(BuildContext context)=> AlertDialog(
+                                content: Wrap(
+                                  children: <Widget>[
+                                    Text("Are you sure you want to delete this location?", style: TextStyle
+                                      ( fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                                actions: <Widget>[
+
+                                  TextButton(onPressed: (){
+                                    Navigator.of(context).pop();
+                                  } ,
+                                    child: Text(
+                                      "No", style:  TextStyle(
+                                      color: Colors.blue,
+                                    ) ,
+                                    ),
+                                  ),
+                                  TextButton(onPressed: () async {
+                                    await _userRepository.removeLocationFromUserCollection(snapshot.data[index].fullName, FirebaseAuth.instance.currentUser.uid.toString());
+                                    Navigator.pop(context);
+                                    setState(() {
+
+                                    });
+                                  } ,
+                                    child: Text(
+                                      "Yes", style:  TextStyle(
+                                      color: Colors.red,
+                                    ) ,
+                                    ),
+                                  ),
+                                ],
+                              )
+                          );
+                        },
 
                         child: Container(
                           child:Card(
@@ -179,8 +218,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Row(
                                       children:<Widget> [
                                         Text((snapshot.data[index].locationAddress)),
-                                      ])
-                                  ,
+                                      ]),
+                                  Row(children: <Widget>[
+                                    Text("Tap to view, Hold to remove",style: new TextStyle(fontSize: 12.0,color: Colors.blueGrey),)
+                                  ])
 
                                 ],
                               ),)

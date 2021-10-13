@@ -124,4 +124,9 @@ class UserRepository{
   {
     return await _firestore.collection('users').doc(UserId).collection('Location Preferences').doc(collectionID).set({});
   }
+
+  Future<void> removeLocationFromUserCollection(String collectionID,String UserId) async
+  {
+    return await _firestore.collection('users').doc(UserId).collection('Location Preferences').doc(collectionID).delete();
+  }
 }

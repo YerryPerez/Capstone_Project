@@ -41,35 +41,49 @@ class _SearchState extends State<Search> {
     difference = location.toInt();
   }
 
-  Future<List<Location>> getLocations(SearchRepository _search) async {
-    var data = await _search
-        .getUserLocations(FirebaseAuth.instance.currentUser.uid.toString());
-
-    List<Location> locations = [];
-
-    for (var s in data) {
-      List<String> locationDetails = s.split(",");
-      Location localWithName = Location();
-      localWithName.locationName = locationDetails[4];
-      if (localWithName.locationName.length > 40) {
-        String s = localWithName.locationName;
-        s = s.substring(0, 40);
-        s = s.substring(0, s.lastIndexOf(" "));
-        localWithName.locationName = s + "...";
+  Future<List<Location>> getCommonLocations(SearchRepository _search) async {
+    List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());
+    List<String> list2 = await _searchRepository.getUserLocations(_user.uid.toString());
+    List<Location> commonLocations = [];
+      for (String s in list1) {
+        if (list2.contains(s)) {
+        // String name = s.substring(s.lastIndexOf(",") + 1,s.length);
+          List<String> locationDetails = s.split(",");
+          String address = s.substring(0, s.lastIndexOf(","));
+         Location localWithName = Location();
+        localWithName.locationName =
+        locationDetails[4];
+        localWithName.locationAddress = locationDetails[0] + locationDetails[1] + "\n" + locationDetails[2] + " " + locationDetails[3] + "\n";
+          localWithName.latLong = new LatLng(double.parse(locationDetails[5]), double.parse(locationDetails[6]));
+        commonLocations.add(localWithName);
       }
-      localWithName.locationAddress = locationDetails[0] +
-          locationDetails[1] +
-          "\n" +
-          locationDetails[2] +
-          " " +
-          locationDetails[3] +
-          "\n";
-      localWithName.latLong = new LatLng(
-          double.parse(locationDetails[5]), double.parse(locationDetails[6]));
-      locations.add(localWithName);
     }
-    return locations;
+
+    // for (var s in data) {
+    //   List<String> locationDetails = s.split(",");
+    //   Location localWithName = Location();
+    //   localWithName.locationName = locationDetails[4];
+    //   if (localWithName.locationName.length > 40) {
+    //     String s = localWithName.locationName;
+    //     s = s.substring(0, 40);
+    //     s = s.substring(0, s.lastIndexOf(" "));
+    //     localWithName.locationName = s + "...";
+    //   }
+    //   localWithName.locationAddress = locationDetails[0] +
+    //       locationDetails[1] +
+    //       "\n" +
+    //       locationDetails[2] +
+    //       " " +
+    //       locationDetails[3] +
+    //       "\n";
+    //   localWithName.latLong = new LatLng(
+    //       double.parse(locationDetails[5]), double.parse(locationDetails[6]));
+    //   locations.add(localWithName);
+    // }
+    return commonLocations;
   }
+
+
 
   @override
   void initState() {
@@ -188,33 +202,17 @@ class _SearchState extends State<Search> {
                                       }, size.height * 0.06, Colors.red),
                                       iconWidget(FontAwesomeIcons.mapMarked,
                                           () async {
-                                        List<String> list1 =
-                                            await _searchRepository
-                                                .getUserLocations(
-                                                    widget.userId.toString());
-                                        List<String> list2 =
-                                            await _searchRepository
-                                                .getUserLocations(
-                                                    _user.uid.toString());
+                                        List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());
+                                        List<String> list2 = await _searchRepository.getUserLocations(_user.uid.toString());
                                         List<Location> commonLocations = [];
                                         for (String s in list1) {
                                           if (list2.contains(s)) {
                                             // String name = s.substring(s.lastIndexOf(",") + 1,s.length);
-                                            List<String> locationDetails =
-                                                s.split(",");
-                                            String address = s.substring(
-                                                0, s.lastIndexOf(","));
+                                            List<String> locationDetails = s.split(",");
+                                            String address = s.substring(0, s.lastIndexOf(","));
                                             Location localWithName = Location();
-                                            localWithName.locationName =
-                                                locationDetails[4];
-                                            localWithName.locationAddress =
-                                                locationDetails[0] +
-                                                    locationDetails[1] +
-                                                    "\n" +
-                                                    locationDetails[2] +
-                                                    " " +
-                                                    locationDetails[3] +
-                                                    "\n";
+                                            localWithName.locationName = locationDetails[4];
+                                            localWithName.locationAddress = locationDetails[0] + locationDetails[1] + "\n" + locationDetails[2] + " " + locationDetails[3] + "\n";
                                             commonLocations.add(localWithName);
                                           }
                                         }
@@ -233,25 +231,14 @@ class _SearchState extends State<Search> {
                                                   // width: MediaQuery.of(context).size.width,
                                                   body: Container(
                                                       child: FutureBuilder(
-                                                    future: getLocations(
-                                                        _searchRepository),
-                                                    builder:
-                                                        (BuildContext context,
-                                                            AsyncSnapshot
-                                                                snapshot) {
-                                                      if (snapshot.data ==
-                                                          null) {
+                                                    future: getCommonLocations(_searchRepository),
+                                                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                                      if (snapshot.data == null) {
                                                         return Container(
                                                             child: Center(
-                                                                child: Text(
-                                                                    "Loading Common Interests")));
+                                                                child: Text("Loading Common Interests")));
                                                       } else {
-                                                        return ListView.builder(
-                                                            itemCount: snapshot
-                                                                .data.length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
+                                                        return ListView.builder(itemCount: snapshot.data.length, itemBuilder: (context, index) {
                                                               return new GestureDetector(
                                                                   onTap:
                                                                       () async {
@@ -301,12 +288,15 @@ class _SearchState extends State<Search> {
                                                                                 Row(children: <Widget>[
                                                                                   Text(snapshot.data[index].locationName,
                                                                                       style: new TextStyle(
-                                                                                        fontSize: 18.0,
+                                                                                        fontSize: 22.0,
                                                                                         fontWeight: FontWeight.bold,
                                                                                       )),
                                                                                 ]),
                                                                                 Row(children: <Widget>[
                                                                                   Text((snapshot.data[index].locationAddress)),
+                                                                                ]),
+                                                                                Row(children: <Widget>[
+                                                                                  Text("Tap to view",style: new TextStyle(fontSize: 12.0,color: Colors.blueGrey),)
                                                                                 ])
                                                                               ],
                                                                             ),

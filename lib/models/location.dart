@@ -5,9 +5,11 @@ class Location {
 String locationName;
 String locationAddress;
 LatLng latLong;
+String fullName;
 
   Location(
       {this.locationName,
         this.locationAddress,
-      this.latLong});
+      this.latLong,
+      this.fullName});
 }
