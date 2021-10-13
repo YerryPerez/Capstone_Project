@@ -9,7 +9,7 @@ class AddressSearch extends SearchDelegate<Suggestion> {
 
   final sessionToken;
   PlaceApiProvider apiClient;
-
+//commit
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
