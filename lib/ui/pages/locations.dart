@@ -14,6 +14,7 @@ import 'package:flutter_test2/models/location.dart';
 class Locations extends StatelessWidget {
   LatLng temp;
   // This widget is the root of your application.
+  //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
