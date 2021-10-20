@@ -27,6 +27,14 @@ class MatchesRepository {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getPendingList(userId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('Likes')
+        .snapshots();
+  }
+
   Future<CitaUser> getUserDetails(userId) async
   {
     CitaUser _user = CitaUser();
@@ -75,6 +83,11 @@ class MatchesRepository {
 
   Future<void> deleteUserFromLikedYou(currentUserId, selectedUserId) async
   {
+    if(_firestore.collection('users').doc(currentUserId).collection('Likes').doc(selectedUserId)!=null) {
+      await _firestore.collection('users').doc(currentUserId).collection(
+          'Likes')
+          .doc(selectedUserId).delete();
+    }
     return await _firestore.collection('users').doc(currentUserId).collection(
         'LikedYou')
         .doc(selectedUserId).delete();
@@ -114,6 +127,7 @@ class MatchesRepository {
 
   Future selectUser(currentUserId, selectedUserId, currentUserName,
       currentUserPhotoUrl, selectedUserName, selectedUserPhotoUrl) async {
+
     deleteUserFromLikedYou(currentUserId, selectedUserId);
 
     await _firestore

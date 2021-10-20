@@ -1,26 +1,37 @@
 import 'package:flutter_test2/models/citaUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'matchesRepository.dart';
 
 class SearchRepository {
   final FirebaseFirestore _firestore;
+  MatchesRepository _matchesRepository = new MatchesRepository();
 
   SearchRepository({FirebaseFirestore firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
   Future<CitaUser> chooseUser(currentUserId, selectedUserId, name, photoUrl) async {
+    var selectedUser = await _matchesRepository.getUserDetails(selectedUserId);
+    var selectedUserName = selectedUser.name;
+    var selectedPhoto= selectedUser.photo;
     await _firestore
         .collection('users')
         .doc(currentUserId)
         .collection('Likes')
         .doc(selectedUserId)
-        .set({});
+        .set({
+      'name': selectedUserName,
+      'photoUrl': selectedPhoto,
+    });
 
     await _firestore
         .collection('users')
         .doc(selectedUserId)
         .collection('Likes')
         .doc(currentUserId)
-        .set({});
+        .set({
+      'name': name,
+      'photoUrl': photoUrl,
+    });
 
     await _firestore
         .collection('users')
