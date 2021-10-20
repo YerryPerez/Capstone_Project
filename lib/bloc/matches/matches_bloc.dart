@@ -63,6 +63,7 @@ class MatchesBloc extends Bloc<MatchesEvent, MatchesState> {
         _matchesRepository.deleteUserFromLikedYou(currentUserId, selectedUserId);
       }
 
+
       Stream<MatchesState> _mapOpenChatToState({String currentUserId, String selectedUserId}) async*
       {
         _matchesRepository.openChat(currentUserId: currentUserId,selectedUserId: selectedUserId);
