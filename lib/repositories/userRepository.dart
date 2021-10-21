@@ -7,11 +7,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'matchesRepository.dart';
+
 
 class UserRepository{
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
-
+  final MatchesRepository _matchesRepository = MatchesRepository();
   UserRepository({
     FirebaseAuth firebaseAuth,
     FirebaseFirestore firestore}): _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance, _firestore = firestore ?? FirebaseFirestore.instance;
@@ -84,16 +86,37 @@ class UserRepository{
       String url,
       ) async{
 
-    await _firestore.collection('users').doc(userId).set({
-              'uid': userId,
-              'photoUrl': url,
-              'name': name,
-              'location': location,
-              'gender': gender,
-              'age': age
+    var chosenList = await _matchesRepository.getChosenList(userId);
 
-        });
+    for(var chosenUser in chosenList){
+      var likedYouList = await _matchesRepository.getLikedYouList(chosenUser);
+      for(var user in likedYouList){
+        if(user== userId){
+          print("---------------------");
+          var a = await _firestore
+              .collection('users')
+              .doc(chosenUser)
+              .collection('LikedYou')
+              .doc(userId).update(<String, dynamic>{
+            'name': name
+          });
+        }
+      }
+
+
+    }
+
+    await _firestore.collection('users').doc(userId).set({
+      'uid': userId,
+      'photoUrl': url,
+      'name': name,
+      'location': location,
+      'gender': gender,
+      'age': age
+
+    });
   }
+
   //TODO: Delete user account
   Future<void> deleteProfile(
       String userId

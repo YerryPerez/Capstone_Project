@@ -169,4 +169,24 @@ class MatchesRepository {
     return chosenList;
   }
 
+  Future<List> getLikedYouList(userId) async{
+    List<String> likedYouList = [];
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('LikedYou')
+        .get().then(
+            (docs){
+          for(var doc in docs.docs){
+            if (docs.docs != null){
+              likedYouList.add(doc.id);
+            }
+          }
+        }
+    );
+    return likedYouList;
+  }
+
+
+
 }
