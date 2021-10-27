@@ -93,7 +93,7 @@ void initState() {
                 ),
               ),
               style: TextButton.styleFrom(
-                primary: Colors.green,
+                primary: Colors.white,
                 textStyle: const TextStyle(fontWeight: FontWeight.w600),
               ),
               child: const Text('ORIGIN'),
@@ -111,7 +111,7 @@ void initState() {
                 ),
               ),
               style: TextButton.styleFrom(
-                primary: Colors.blue,
+                primary: Colors.white,
                 textStyle: const TextStyle(fontWeight: FontWeight.w600),
               ),
               child: const Text('DEST'),
