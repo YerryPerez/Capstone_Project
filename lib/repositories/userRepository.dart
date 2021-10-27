@@ -62,9 +62,55 @@ class UserRepository{
       UploadTask uploadTask = FirebaseStorage.instance.ref().
       child('userPhotos').child(userId).child(userId).putFile(photo);
 
+
+
       return await uploadTask.whenComplete(() => null).then(
           (ref) async {
             await ref.ref.getDownloadURL().then((url) async{
+
+
+              var chosenList = await _matchesRepository.getChosenList(userId);
+
+              for(var chosenUser in chosenList) {
+                var likedYouList = await _matchesRepository.getLikedYouList(chosenUser);
+                for (var user in likedYouList) {
+                  if (user == userId) {
+                    print("---------------------");
+                    var a = await _firestore
+                        .collection('users')
+                        .doc(chosenUser)
+                        .collection('LikedYou')
+                        .doc(userId).update(<String, dynamic>{
+                      'name': name,
+                      'photoUrl': url
+
+                    });
+                  }
+                }
+              }
+              var matchList = await _matchesRepository.getMatchedUsersList(userId);
+
+              for(var chosenUser in matchList){
+                var otherUsersMatched = await _matchesRepository.getMatchedUsersList(chosenUser);
+                for(var user in otherUsersMatched){
+                  if(user== userId){
+                    print("---------------------");
+                    var a = await _firestore
+                        .collection('users')
+                        .doc(chosenUser)
+                        .collection('matchedList')
+                        .doc(userId).update(<String, dynamic>{
+                      'name': name,
+                      'photoUrl': url
+
+                    });
+                  }
+                }
+
+
+              }
+
+
               await _firestore.collection('users').doc(userId).set({
                 'uid': userId,
                 'photoUrl': url,
@@ -73,8 +119,15 @@ class UserRepository{
                 'gender': gender,
                 'age': age
               });
+
+
+
+
+
             });
           });
+
+
   }
 
   Future<void> profileSetUpWithoutImage(
@@ -88,10 +141,10 @@ class UserRepository{
 
     var chosenList = await _matchesRepository.getChosenList(userId);
 
-    for(var chosenUser in chosenList){
+    for(var chosenUser in chosenList) {
       var likedYouList = await _matchesRepository.getLikedYouList(chosenUser);
-      for(var user in likedYouList){
-        if(user== userId){
+      for (var user in likedYouList) {
+        if (user == userId) {
           print("---------------------");
           var a = await _firestore
               .collection('users')
@@ -102,9 +155,27 @@ class UserRepository{
           });
         }
       }
+    }
+      var matchList = await _matchesRepository.getMatchedUsersList(userId);
+
+      for(var chosenUser in matchList){
+        var otherUsersMatched = await _matchesRepository.getMatchedUsersList(chosenUser);
+        for(var user in otherUsersMatched){
+          if(user== userId){
+            print("---------------------");
+            var a = await _firestore
+                .collection('users')
+                .doc(chosenUser)
+                .collection('matchedList')
+                .doc(userId).update(<String, dynamic>{
+              'name': name
+            });
+          }
+        }
 
 
     }
+
 
     await _firestore.collection('users').doc(userId).set({
       'uid': userId,

@@ -187,6 +187,24 @@ class MatchesRepository {
     return likedYouList;
   }
 
+  Future<List> getMatchedUsersList(userId) async{
+    List<String> matches = [];
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('matchedList')
+        .get().then(
+            (docs){
+          for(var doc in docs.docs){
+            if (docs.docs != null){
+              matches.add(doc.id);
+            }
+          }
+        }
+    );
+    return matches;
+  }
+
 
 
 }
