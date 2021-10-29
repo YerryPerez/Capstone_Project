@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'matchesRepository.dart';
-
-
 class UserRepository{
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
@@ -17,11 +14,9 @@ class UserRepository{
   UserRepository({
     FirebaseAuth firebaseAuth,
     FirebaseFirestore firestore}): _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance, _firestore = firestore ?? FirebaseFirestore.instance;
-
   Future<void> signInWithEmail( String email, String password){
     return _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
-
   Future<bool> isFirstTime(String userId) async{
     bool exist;
     await FirebaseFirestore.instance.collection('users').doc(userId).get().then((user){
@@ -61,16 +56,10 @@ class UserRepository{
       ) async{
       UploadTask uploadTask = FirebaseStorage.instance.ref().
       child('userPhotos').child(userId).child(userId).putFile(photo);
-
-
-
       return await uploadTask.whenComplete(() => null).then(
           (ref) async {
             await ref.ref.getDownloadURL().then((url) async{
-
-
               var chosenList = await _matchesRepository.getChosenList(userId);
-
               for(var chosenUser in chosenList) {
                 var likedYouList = await _matchesRepository.getLikedYouList(chosenUser);
                 for (var user in likedYouList) {
@@ -83,7 +72,6 @@ class UserRepository{
                         .doc(userId).update(<String, dynamic>{
                       'name': name,
                       'photoUrl': url
-
                     });
                   }
                 }
@@ -102,15 +90,10 @@ class UserRepository{
                         .doc(userId).update(<String, dynamic>{
                       'name': name,
                       'photoUrl': url
-
                     });
                   }
                 }
-
-
               }
-
-
               await _firestore.collection('users').doc(userId).set({
                 'uid': userId,
                 'photoUrl': url,
@@ -119,15 +102,8 @@ class UserRepository{
                 'gender': gender,
                 'age': age
               });
-
-
-
-
-
             });
           });
-
-
   }
 
   Future<void> profileSetUpWithoutImage(
@@ -172,11 +148,7 @@ class UserRepository{
             });
           }
         }
-
-
     }
-
-
     await _firestore.collection('users').doc(userId).set({
       'uid': userId,
       'photoUrl': url,
@@ -208,17 +180,14 @@ class UserRepository{
         'lng' : locationCords.longitude
       });
   }
-
   Future<void> addUserToLocationCollection(String collectionID, String UserId) async
   {
     return await _firestore.collection('locations').doc(collectionID).collection(UserId).doc(UserId.toString()).set({});
   }
-
   Future<void> addLocationToUserCollection(String collectionID, String UserId) async
   {
     return await _firestore.collection('users').doc(UserId).collection('Location Preferences').doc(collectionID).set({});
   }
-
   Future<void> removeLocationFromUserCollection(String collectionID,String UserId) async
   {
     return await _firestore.collection('users').doc(UserId).collection('Location Preferences').doc(collectionID).delete();

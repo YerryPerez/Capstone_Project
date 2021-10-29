@@ -319,7 +319,12 @@ class _MatchesState extends State<Matches> {
                                                                     },
                                                                   )));
                                                         });
-                                                  }, size.height * .04, Colors.white))
+                                                  }, size.height * .04, Colors.white)),
+                                              iconWidget(Icons.clear,
+                                                      () async {
+                                                    await matchesRepository.unmatchUser(widget.userId.toString(), selectedUser.uid.toString());
+                                                    Navigator.pop(context);
+                                                  }, size.height * 0.06, Colors.red)
                                             ],
                                           )
                                         ],

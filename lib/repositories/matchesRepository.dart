@@ -1,10 +1,6 @@
-
 import 'dart:async';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test2/models/citaUser.dart';
-
 class MatchesRepository {
   final FirebaseFirestore _firestore;
 
@@ -68,17 +64,17 @@ class MatchesRepository {
       'timestamp': DateTime.now()
     });
 
-    await _firestore
-        .collection('users')
-        .doc(currentUserId)
-        .collection('matchedList')
-        .doc(selectedUserId)
-        .delete();
-
-    await _firestore.collection('users').doc(selectedUserId).collection(
-        'matchedList')
-        .doc(currentUserId)
-        .delete();
+    // await _firestore
+    //     .collection('users')
+    //     .doc(currentUserId)
+    //     .collection('matchedList')
+    //     .doc(selectedUserId)
+    //     .delete();
+    //
+    // await _firestore.collection('users').doc(selectedUserId).collection(
+    //     'matchedList')
+    //     .doc(currentUserId)
+    //     .delete();
   }
 
   Future<void> deleteUserFromLikedYou(currentUserId, selectedUserId) async
@@ -98,7 +94,44 @@ class MatchesRepository {
     return await _firestore.collection('users').doc(currentUserId).collection(
         'matchedList')
         .doc(selectedUserId).delete();
+  }
+  Future<void> unmatchUser(currentUserId,selectedUserId) async
+  {
+    List<String> messages =[];
+    await _firestore.collection('users').doc(currentUserId).collection(
+        'Likes')
+        .doc(selectedUserId).delete();
+    await _firestore.collection('users').doc(selectedUserId).collection(
+        'Likes')
+        .doc(currentUserId).delete();
 
+    await _firestore.collection('users').doc(currentUserId).collection(
+        'matchedList')
+        .doc(selectedUserId).delete();
+    await _firestore.collection('users').doc(selectedUserId).collection(
+        'matchedList')
+        .doc(currentUserId).delete();
+
+     await _firestore.collection('users').doc(currentUserId).collection('chats').doc(selectedUserId).collection('messages').get().then(
+            (docs){
+          for(var doc in docs.docs){
+            if (docs.docs != null){
+              messages.add(doc.id);
+            }
+          }
+        }
+    );
+     for(var item in messages)
+       {
+         await _firestore.collection('messages').doc(item).delete();
+       }
+
+    await _firestore.collection('users').doc(currentUserId).collection(
+        'chats')
+        .doc(selectedUserId).delete();
+    await _firestore.collection('users').doc(selectedUserId).collection(
+        'chats')
+        .doc(currentUserId).delete();
   }
 
   Future<void> deleteUserFromOthersLikes(currentUserId,selectedUserId) async
@@ -186,7 +219,6 @@ class MatchesRepository {
     );
     return likedYouList;
   }
-
   Future<List> getMatchedUsersList(userId) async{
     List<String> matches = [];
     await _firestore
@@ -204,7 +236,4 @@ class MatchesRepository {
     );
     return matches;
   }
-
-
-
 }

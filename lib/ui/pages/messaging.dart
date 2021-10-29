@@ -325,7 +325,14 @@ class _MessagingState extends State<Messaging> {
                                                                 },
                                                               )));
                                                     });
-                                              }, size.height * .04, Colors.white))
+                                              }, size.height * .04, Colors.white),
+                                      ),
+                                      iconWidget(Icons.clear,
+                                              () async {
+                                          await matchesRepository.unmatchUser(widget.currentUser.uid, widget.selectedUser.uid);
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                          }, size.height * 0.06, Colors.red)
                                     ],
                                   )
                                 ],
