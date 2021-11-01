@@ -122,21 +122,21 @@ class _SettingsState extends State<Settings> {
                 ],
               ),
             ),
-            const SizedBox(height: 10.0),
-            Text("Notification Settings", style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.indigo,
-            ),
-            ),
-            SwitchListTile(value: true,
-              activeColor: Colors.indigo,
-              contentPadding: const EdgeInsets.all(0),
-              title: Text("Receive Notifications"),
-              onChanged: (val){
-                // flip
-              },
-            ),
+            // const SizedBox(height: 10.0),
+            // Text("Notification Settings", style: TextStyle(
+            //   fontSize: 20.0,
+            //   fontWeight: FontWeight.bold,
+            //   color: Colors.indigo,
+            // ),
+            // ),
+            // SwitchListTile(value: true,
+            //   activeColor: Colors.indigo,
+            //   contentPadding: const EdgeInsets.all(0),
+            //   title: Text("Receive Notifications"),
+            //   onChanged: (val){
+            //     // flip
+            //   },
+            // ),
           ],
         ),
       ),
