@@ -344,7 +344,7 @@ class _MatchesState extends State<Matches> {
                               containerWidth: size.width * 0.5,
                               child: Text(
                                 "  " + user[index].get('name'),
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white, fontSize: 16),
                               ),
                             ),
                           );
@@ -352,7 +352,7 @@ class _MatchesState extends State<Matches> {
                         childCount: user.length,
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
+                        crossAxisCount: 2,
                       ),
                     );
                   } else {
@@ -648,7 +648,7 @@ class _MatchesState extends State<Matches> {
                               containerWidth: size.width * 0.5,
                               child: Text(
                                 "  " + user[index].get('name'),
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white, fontSize: 16),
                               ),
                             ),
                           );
@@ -656,7 +656,7 @@ class _MatchesState extends State<Matches> {
                         childCount: user.length,
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4),
+                          crossAxisCount: 2),
                     );
                   } else
                     return SliverToBoxAdapter(
