@@ -263,7 +263,7 @@ Widget textFieldWidget(controller, text, size) {
   return Padding(
     padding: EdgeInsets.all(size.height * .02),
     child: TextField(
-      maxLength: 16,
+      maxLength: 10,
       controller: controller,
       decoration: InputDecoration(
           labelText: text,

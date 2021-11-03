@@ -68,6 +68,12 @@ class _MessagingState extends State<Messaging> {
         Location localWithName = Location();
         localWithName.locationName =
         locationDetails[4];
+        if (localWithName.locationName.length > 30){
+          String s = localWithName.locationName;
+          s = s.substring(0, 30);
+          s = s.substring(0,s.lastIndexOf(" "));
+          localWithName.locationName = s + "...";
+        }
         localWithName.locationAddress = locationDetails[0] + locationDetails[1] + "\n" + locationDetails[2] + " " + locationDetails[3] + "\n";
         localWithName.latLong = new LatLng(double.parse(locationDetails[5]), double.parse(locationDetails[6]));
         commonLocations.add(localWithName);
