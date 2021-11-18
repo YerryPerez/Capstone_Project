@@ -179,7 +179,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         );
                       },
                       child: Text(
-                        age == null? "Enter Birth date": DateFormat.yMMMd().format(age),
+                        age == null? "Tap to enter birthday": DateFormat.yMMMd().format(age),
                         style: TextStyle(
                             color: Colors.white, fontSize: size.width * .09),
                       ),

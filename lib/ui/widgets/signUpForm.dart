@@ -26,7 +26,7 @@ class _SignUpFormState extends State<SignUpForm> {
       _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
   bool isSignUpButtonEnabled(SignUpState state) {
-    return isPopulated && !state.isSubmitting;
+    return isPopulated && !state.isSubmitting && state.isEmailValid && state.isPasswordValid;
   }
 
   @override
@@ -115,6 +115,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         return !state.isEmailValid ? "Invalid Email" : null;
                       },
                       decoration: InputDecoration(
+                        errorStyle: TextStyle(
+                          color: Colors.white
+                        ),
                         labelText: "Email",
                         labelStyle: TextStyle(
                           color: Colors.white,
@@ -138,9 +141,12 @@ class _SignUpFormState extends State<SignUpForm> {
                       autocorrect: false,
                       obscureText: true,
                       validator: (_) {
-                        return !state.isPasswordValid ? "Invalid Password" : null;
+                        return !state.isPasswordValid ? "Invalid Password: Password must be alphanumeric" + "\n" + "and at least 8 characters long" : null;
                       },
                       decoration: InputDecoration(
+                        errorStyle: TextStyle(
+                          color: Colors.white
+                        ),
                         labelText: "Password",
                         labelStyle: TextStyle(
                             color: Colors.white, fontSize: size.height * .03),

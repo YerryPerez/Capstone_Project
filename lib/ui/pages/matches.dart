@@ -496,13 +496,13 @@ class _MatchesState extends State<Matches> {
                                                       Navigator.of(context)
                                                           .pop();
                                                     }, size.height * 0.08,
-                                                        Colors.blue),
+                                                        Colors.red),
                                                     SizedBox(
                                                       width: size.width * 0.05,
                                                     ),
                                                     iconWidget(
                                                         FontAwesomeIcons
-                                                            .solidHeart, () {
+                                                            .check, () {
                                                       _matchesBloc.add(
                                                         AcceptUserEvent(
                                                             selectedUser:
@@ -526,7 +526,7 @@ class _MatchesState extends State<Matches> {
                                                       Navigator.of(context)
                                                           .pop();
                                                     }, size.height * 0.06,
-                                                        Colors.red),
+                                                        Colors.green),
                                                     SizedBox(
                                                       width: size.width * 0.08,
                                                     ),

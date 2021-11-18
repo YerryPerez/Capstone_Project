@@ -74,7 +74,6 @@ class _SettingsState extends State<Settings> {
                           MaterialPageRoute(builder: (context) => PrivacyPolicy()),
                         );
                       }
-
                   ),
                   Divider(
                     color: Colors.black,
@@ -91,7 +90,7 @@ class _SettingsState extends State<Settings> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Delete Profile.'),
-                              content: Text("Are You Sure Want To Proceed ?"),
+                              content: Text("Are you sure want to proceed?"),
                               actions: <Widget>[
                                 TextButton(
                                   child: Text("YES"),

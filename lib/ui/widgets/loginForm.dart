@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
   void _onFormSubmitted() {
     _loginBloc.add(
       LoginWithCredentialsPressed(
-          email: _emailController.text, password: _passwordController.text),
+          email: _emailController.text.trim(), password: _passwordController.text),
     );
   }
 
@@ -135,6 +135,9 @@ class _LoginFormState extends State<LoginForm> {
                             return !state.isEmailValid ? "Invalid Email" : null;
                           },
                           decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              color: Colors.white
+                            ),
                             labelText: "Email",
                             labelStyle: TextStyle(
                                 color: Colors.white,
@@ -154,15 +157,18 @@ class _LoginFormState extends State<LoginForm> {
                         padding: EdgeInsets.all(size.height * .02),
                         child: TextFormField(
                           controller: _passwordController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          //autovalidateMode: AutovalidateMode.onUserInteraction,
                           autocorrect: false,
                           obscureText: true,
-                          validator: (_) {
-                            return !state.isPasswordValid
-                                ? "Invalid Password"
-                                : null;
-                          },
+                          // validator: (_) {
+                          //   return !state.isPasswordValid
+                          //       ? "Invalid Password"
+                          //       : null;
+                          // },
                           decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              color: Colors.white
+                            ),
                             labelText: "Password",
                             labelStyle: TextStyle(
                                 color: Colors.white,

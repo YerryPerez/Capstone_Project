@@ -221,11 +221,13 @@ class _EditProfileForm extends State<editProfileForm> {
                           },
                         );
                       },
-                      child: Text(
-                        age == null? "Enter Birth date": DateFormat.yMMMd().format(age),
+                      child:
+                      Text(
+                        age == null? "Tap to enter birthday": DateFormat.yMMMd().format(age),
                         style: TextStyle(
-                            color: Colors.white, fontSize: size.width * .09),
-                      ),
+                            color: Colors.white, fontSize: size.width * .05),
+                      )
+                      ,
                     ),
                     SizedBox(
                       height: 1.0,

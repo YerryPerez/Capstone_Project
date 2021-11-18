@@ -8,7 +8,7 @@ class Validators {
   );
 
   static isValidEmail(String email) {
-    return _emailRegExp.hasMatch(email);
+    return _emailRegExp.hasMatch(email.trim());
   }
 
   static isValidPassword(String password) {

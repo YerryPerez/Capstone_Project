@@ -126,13 +126,15 @@ class _SearchState extends State<Search> {
 
           getDifference(_user.location);
           if (_user.location == null) {
-            return Text(
-              "No more profiles to show",
+            return Center(
+              child: Text(
+              "No more profiles that match your preferences :( \n\n Try adding more locations!" ,
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
-            );
+              textAlign: TextAlign.center,
+            ),);
           } else
             return SingleChildScrollView(
                 child: profileWidget(
@@ -195,8 +197,8 @@ class _SearchState extends State<Search> {
                                       iconWidget(Icons.clear, () {
                                         _searchBloc.add(PassUserEvent(
                                             widget.userId, _user.uid));
-                                      }, size.height * .08, Colors.blue),
-                                      iconWidget(FontAwesomeIcons.solidHeart,
+                                      }, size.height * .08, Colors.red),
+                                      iconWidget(FontAwesomeIcons.check,
                                           () {
                                         _searchBloc.add(
                                           SelectUserEvent(
@@ -205,7 +207,7 @@ class _SearchState extends State<Search> {
                                               currentUserId: widget.userId,
                                               selectedUserId: _user.uid),
                                         );
-                                      }, size.height * 0.06, Colors.red),
+                                      }, size.height * 0.06, Colors.green),
                                       iconWidget(FontAwesomeIcons.mapMarked,
                                           () async {
                                         List<String> list1 = await _searchRepository.getUserLocations(widget.userId.toString());

@@ -48,7 +48,29 @@ class Tabs extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
-                    BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Sign Out'),
+                      content: Text("Are you sure want to proceed?"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text("YES"),
+                          onPressed: () async {
+                            BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text("NO"),
+                          onPressed: () {
+                            //Put your code here which you want to execute on No button click.
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );});
                   },
                 ),
 

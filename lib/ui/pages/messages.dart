@@ -68,10 +68,15 @@ class _MessagesState extends State<Messages> {
                   );
                 }
               } else
-                return Text(
-                  " You don't have any conversations",
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                );
+                return Center(
+                  child: Text(
+                    "You don't have any conversations" ,
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),);
             },
           );
         }

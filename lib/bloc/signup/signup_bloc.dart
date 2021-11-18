@@ -56,7 +56,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   // check if email is valid
   Stream<SignUpState> _mapEmailChangedToState(String email) async*{
-    yield state.update(isEmailValid: Validators.isValidEmail(email));
+    yield state.update(isEmailValid: Validators.isValidEmail(email.trim()));
   }
 
   // check if password is valid
