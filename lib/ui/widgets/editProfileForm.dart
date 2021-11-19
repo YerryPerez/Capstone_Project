@@ -223,14 +223,20 @@ class _EditProfileForm extends State<editProfileForm> {
                       },
                       child:
                       Text(
-                        age == null? "Tap to enter birthday": DateFormat.yMMMd().format(age),
+                        age == null? "Tap to enter birthday": "Birth Date: " +DateFormat.yMMMd().format(age),
                         style: TextStyle(
-                            color: Colors.white, fontSize: size.width * .05),
+                            color: Colors.white, fontSize: size.width * .09),
                       )
                       ,
                     ),
                     SizedBox(
                       height: 1.0,
+                    ),
+                    Divider(
+                      color: Colors.white,
+                      thickness: 2,
+                      indent: 20,
+                      endIndent: 20,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +283,7 @@ class _EditProfileForm extends State<editProfileForm> {
                     ),
                     Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: size.height * .02),
+                            EdgeInsets.all(30),
                         child: GestureDetector(
                             onTap: () {
                               if (isButtonEnabled(state)) {

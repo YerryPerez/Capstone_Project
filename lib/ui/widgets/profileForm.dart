@@ -187,6 +187,12 @@ class _ProfileFormState extends State<ProfileForm> {
                     SizedBox(
                       height: 10.0,
                     ),
+                    Divider(
+                      color: Colors.white,
+                      thickness: 2,
+                      indent: 20,
+                      endIndent: 20,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -232,7 +238,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     ),
                     Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: size.height * .02),
+                            EdgeInsets.all(25),
                         child: GestureDetector(
                             onTap: () {
                               if (isButtonEnabled(state)) {
