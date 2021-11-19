@@ -300,9 +300,7 @@ class _EditProfileForm extends State<editProfileForm> {
                                 width: size.width * .8,
                                 height: size.height * .06,
                                 decoration: BoxDecoration(
-                                  color: isButtonEnabled(state)
-                                      ? Colors.white
-                                      : Colors.grey,
+                                  color: Colors.white,
                                   borderRadius:
                                       BorderRadius.circular(size.height * .05),
                                 ),

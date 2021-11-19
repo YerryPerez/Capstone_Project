@@ -243,15 +243,35 @@ class _ProfileFormState extends State<ProfileForm> {
                             onTap: () {
                               if (isButtonEnabled(state)) {
                                 _onSubmitted();
-                              } else {}
+                              } else {
+                                String userPhoto = photo == null? "photo, ": "";
+                                String userName = age == null? "age, ": "";
+                                String userAge = !_nameController.text.isNotEmpty? "name, ": "";
+                                String userGender = gender == null? "gender, ": "";
+                                String result = userPhoto + userName + userAge + userGender;
+                                result = result.substring(0, result.length-2);
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Missing fields'),
+                                        content: Text("You must enter your: " + result),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("OK"),
+                                            onPressed: () async {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );});
+                              }
                             },
                             child: Container(
                                 width: size.width * .8,
                                 height: size.height * .06,
                                 decoration: BoxDecoration(
-                                  color: isButtonEnabled(state)
-                                      ? Colors.white
-                                      : Colors.grey,
+                                  color: Colors.white,
                                   borderRadius:
                                       BorderRadius.circular(size.height * .05),
                                 ),
