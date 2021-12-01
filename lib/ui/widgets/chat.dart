@@ -162,7 +162,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                               ),
                             ),
                             chat.lastMessage != null?Text(
-                              chat.lastMessage,
+                              chat.lastMessage.substring(0, chat.lastMessage.length >= 30?30:chat.lastMessage.length),
                               overflow: TextOverflow.fade,
                               style: TextStyle(color: Colors.grey),
                             ): chat.lastMessagePhoto == null?
