@@ -23,13 +23,14 @@ class Tabs extends StatelessWidget {
 
     return Theme(
       data: ThemeData(
-        primaryColor: backgroundColor,
-        accentColor: Colors.white,
+        primaryColor: Colors.deepOrange,
+        backgroundColor: Colors.deepOrange,
       ),
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.deepOrange,
               centerTitle: true,
               title: Text(
                 "Cita",
@@ -83,7 +84,7 @@ class Tabs extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          TabBar(tabs: <Widget>[
+                          TabBar(indicatorColor: Colors.white,tabs: <Widget>[
                             Tab(icon: Icon(Icons.add_location)),
                             Tab(icon: Icon(Icons.search)),
                             Tab(icon: Icon(Icons.people)),
